@@ -584,7 +584,7 @@ for(let i=0;i<3;i++){
 
 **省錢鐵則：** 測試用 **fast + 480p + 10s = 50 盒飯** 最便宜。滿意再用 pro + 720p。
 
-**其他模型的 cost formula 待驗** — Sora 2 / Kling 3.0 Pro / Vidu Q3 Ref 預計更貴。
+**其他模型的 cost formula 待驗** — Kling 3.0 Pro / Vidu Q3 Ref 預計更貴（🔴 Sora 2 已停運，不再可用）。
 
 ### 12.6 盒飯 vs STAR 雙貨幣系統
 
@@ -1662,7 +1662,7 @@ submit 後 STAR 餘額不變。agent 等用戶 confirm 才 commit（之後才扣
 ```
 1. 點「+ 新建專案」開新 workspace（feedback_no_reuse_workspace.md）
 2. 切自由畫布 chip（feedback_oiioii_mode_lock.md）
-3. 模型 dropdown → 圖片 tab → 選 Seedream 5.0 / Nano Pro（⚠️ GPT-Image2 已下架，改名 Gpt 4o）
+3. 模型 dropdown → 圖片 tab → 選 Oii Image 2 [Best]（文字旗艦）/ Oii Nano Pro / Seedream 5.0（⚠️ GPT-Image2 已移除 2026-06-08；Oii 4o = GPT-4o 改名，非圖片旗艦）
 4. inject hero shot 圖 prompt（含「形狀完整無變形」鎖），send，等 30-90s（圖快）
 5. ✅ 右鍵 canvas 上的圖 → 「生成影片」→ 彈出 canvas i2v 框（圖自動附 + Seedance 2.0 pro 自動選）
 6. inject 黃金公式運鏡 prompt 到「canvas i2v 框」（不是左 panel！）+ click `_send-section_` 送出

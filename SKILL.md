@@ -35,7 +35,29 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 **使用者自然語言 flags 可 override 預設：** 使用者一句話可帶「用 Kling / 5 秒 / 豎屏 / 免費 / Ghibli 風 / 有對白」等自然語言 flag，auto-pilot 掃 [templates/user-flags.md](templates/user-flags.md) 對照表自動套用。使用者不懂術語也 OK — 「做個抖音」「可愛一點」「夢幻」都有對應翻譯。
 
-**⚡ Token-Efficient Mode (大專案必讀)：** 本 skill 30+ 檔 / 7000+ 行，全量讀會爆 context。Auto-Pilot 預設套 [templates/token-efficient-mode.md](templates/token-efficient-mode.md) 的 7 層策略 (lazy load / grep / 子代理 / preset 跳過 / cache polling)。**一般任務目標 ~25-40k tokens，不是 100k+**。豪華模式 (全量讀) 只在 benchmark / 學 skill / 陌生平台探索時啟用。
+**⚡ Token-Efficient Mode (大專案必讀)：** 本 skill 55+ 檔 / 14000+ 行，全量讀會爆 context。Auto-Pilot 預設套 [templates/token-efficient-mode.md](templates/token-efficient-mode.md) 的 7 層策略 (lazy load / grep / 子代理 / preset 跳過 / cache polling)。**一般任務目標 ~25-40k tokens，不是 100k+**。豪華模式 (全量讀) 只在 benchmark / 學 skill / 陌生平台探索時啟用。
+
+## 🎯 快查表：3 秒找對檔案（更直覺入口）
+
+**先看這張表 → 對到使用者說的話 → 直接讀那個檔。** 找不到再往下走完整流程。
+
+| 使用者說… | 讀這個檔 | 為什麼 |
+|---|---|---|
+| 「結果有瑕疵/爛掉/不夠精緻/閃爍/變形/塑膠感/文字怪」 | [quality-control.md](references/quality-control.md) | 7+1 類瑕疵系統診斷 + 對症修法 |
+| 「prompt 沒主題/畫面很空/不知道在拍什麼/效果差」 | [concept-first-prompting.md](references/concept-first-prompting.md) | 先定 concept 再加技術詞 |
+| 「不知道用哪個模型/該用哪個平台/不熟各家」 | [model-picker.md](references/model-picker.md) | 決策樹 + 各家最強情境 |
+| 「角色要一致/同一個人出現多鏡/風格鎖定」 | [asset-library.md](templates/asset-library.md) + [multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) | 角色卡 + @element 身份鎖 |
+| 「圖生影片/i2v/img2video/參考圖鎖死/產品廣告鎖形狀」 | [image-to-video-workflow.md](references/image-to-video-workflow.md) | i2v 鎖形狀 SOP（產品廣告最穩） |
+| 「寫歌/純音樂」→[suno.md](references/suno.md)｜「對白/音效/配樂/原生音訊」→[sound-design.md](references/sound-design.md) | 二選一 | 純音樂 vs 影片內音訊分流 |
+| 「做 MV/卡點/轉場/剪接節奏」 | [music-video.md](templates/music-video.md) + [editing-transitions.md](references/editing-transitions.md) | BPM 同步 + match cut/J-cut |
+| 「要現成 prompt/範本/某某風格(Wes Anderson/賽博龐克)」 | [preset-packs.md](templates/preset-packs.md) | 30+ preset 換占位符即用 |
+| 「想抄某導演/DP/品牌/製作公司風格」 | [director-style-library.md](references/director-style-library.md) | 簽名 token（⚠️ Flux/Nano 洗掉導演名）|
+| 「超短廣告/TikTok/10秒快剪」 | [nano-banana.md](references/nano-banana.md) | <30 token 超精簡 prompt |
+| 「Wan 2.7/Kling Omni/HappyHorse/拉片復刻/多模型省成本」 | [multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) | 2026 新模型招牌技巧 |
+| 「幫我直接操作 OiiOii/Flow/Kling」 | [click-protocol.md](automation/click-protocol.md) + [site-profiles/](automation/site-profiles/README.md) | 自動化協議 + 各站 UI 地圖 |
+| 「免費/不想花錢」 | [selector.md](references/selector.md) Cost 欄 + 各平台檔 Free tier | 免費額度速查 |
+
+> **🔴 OiiOii 專用：** OiiOii **2026-06-08 大改版**，最新 UI/流程/成本/i2v/選模型/新模型（Oii Image 2 / Gemini Omni / Oii X Imagine）一律以 [`automation/site-profiles/oiioii.md §0`](automation/site-profiles/oiioii.md) 為準（**SOURCE OF TRUTH**）。`references/oiioii.md` 只看 prompt 哲學，UI 別照它。
 
 ## 🔴 硬規則 (Mandatory)
 
@@ -141,22 +163,25 @@ Prompt 寫完問自己：
 - Seedance 2.0 pro / 1.0 Pro / Lite（OiiOii 影片旗艦，`@AssetName` 標記）→ [references/seedance.md](references/seedance.md)
 - Vidu Q3 Mix/Ref/Pro（動漫 + 多角色一致，`@tag` 多參 + HEX 鎖色）→ [references/vidu.md](references/vidu.md)
 - Runway Gen-4.5 / Aleph / Act-Two → [references/runway.md](references/runway.md)
-- Google **Veo 3.1 + 🆕 Gemini Omni**（Google 雙旗艦：4K 畫質線 + 對話編輯線，I/O 2026 發表）→ [references/veo.md](references/veo.md)
-- Hailuo 2.3（角色表演）/ Wan 2.7·2.6（複雜場景/對白）/ HappyHorse（敘事音畫）→ 見 [references/model-picker.md](references/model-picker.md)
+- Google **Veo 3.1** → [references/veo.md](references/veo.md)｜🆕 **Gemini Omni**（對話式多模態、多輪編輯、any-to-any）→ [references/gemini-omni.md](references/gemini-omni.md)（Google 雙旗艦：4K 畫質線 + 對話編輯線）
+- 🆕 **Hailuo 2.3 Pro/Std**（角色表演/微表情旗艦，5s）→ [references/hailuo.md](references/hailuo.md)
+- Wan 2.7·2.6（複雜場景/對白/Thinking Mode）/ HappyHorse（敘事音畫）→ [references/multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) + [model-picker.md](references/model-picker.md)
 - ⚠️ OpenAI Sora 2 → [references/sora.md](references/sora.md)（**已停運** — app 2026-04-26 關，API 2026-09-24 關。讀此檔只為了解替代方案；新任務改用 Veo/Gemini Omni/Runway/Kling）
 
 **圖片 (Image)**
+- **🆕 Oii Image 2 [Best]**（OiiOii 圖片旗艦：文字渲染+寫實最強，代替已移除的 GPT-Image2）→ 見 [site-profiles/oiioii.md §0](automation/site-profiles/oiioii.md)。⚠️ **GPT-Image2 已從 OiiOii 移除 2026-06-08**；圖內精準文字改用 Oii Image 2 / Ideogram 3 / Nano Banana Pro
 - Seedream 5.0 / 4.0 → [references/seedream.md](references/seedream.md)
 - Midjourney V8.1 / niji 7（⚠️ `--oref` 為 V7-only） → [references/midjourney.md](references/midjourney.md)
 - Flux 1.1 Pro / Kontext → [references/flux.md](references/flux.md)
-- Ideogram 3 → [references/ideogram.md](references/ideogram.md)
+- Ideogram 3（文字/海報/Logo 精準渲染）→ [references/ideogram.md](references/ideogram.md)
+- Nano Banana Pro（超短 10s 廣告 / TikTok，<30 token 精簡 prompt）→ [references/nano-banana.md](references/nano-banana.md)
 - Stable Diffusion 3.5 / SDXL → [references/stable-diffusion.md](references/stable-diffusion.md)
 
 **音樂 (Music)**
 - Suno v5.5（Personas 已改名 Voices） → [references/suno.md](references/suno.md)
 
 **複合 / 多智能體**
-- OiiOii.ai → [references/oiioii.md](references/oiioii.md)
+- **OiiOii.ai** → 自動化/UI/最新模型：[site-profiles/oiioii.md §0](automation/site-profiles/oiioii.md)（**SOURCE OF TRUTH**）｜prompt 哲學：[references/oiioii.md](references/oiioii.md)（⚠️ §1-§12 舊 UI 勿照）
 
 **跨平台共通**
 - 鏡頭語言 (影片類都適用) → [references/camera-language.md](references/camera-language.md)
@@ -206,13 +231,20 @@ Prompt 寫完問自己：
 **1. 通用 click 協議 (所有網站都要遵循)**
 - [automation/click-protocol.md](automation/click-protocol.md) — Click 決策樹、ref 保質期、座標精準技巧、驗證 selected 的方法、scroll-aware 座標、paywall 偵測、等待策略、驗證循環、速度優化
 
-**2. 網站特定 profile (該站的 UI 地圖 + 座標 + 陷阱)**
-- [automation/site-profiles/](automation/site-profiles/) — 每個網站一份深度 profile
-  - ✅ [oiioii.md](automation/site-profiles/oiioii.md) — 完整驗證 Phase 1-3E (止於付費牆)
-  - ✅ [flow.md](automation/site-profiles/flow.md) — 完整驗證 Phase 1-6 (Veo 3.1 Fast/Quality/Lite)
-  - ✅ [kling.md](automation/site-profiles/kling.md) — 完整驗證 Phase 1-7 (Kling 3.0 + credits + Fast-Track)
-  - ⏳ 其他平台 (Suno / Runway / MJ 等) 待操作時補
-  - 📝 [_template.md](automation/site-profiles/_template.md) — 新網站 profile 模板
+**2. 網站特定 profile (該站的 UI 地圖 + 座標 + 陷阱)** — 索引見 [site-profiles/README.md](automation/site-profiles/README.md)
+
+**✅ 完整驗證（可放心自動化）：**
+  - [oiioii.md](automation/site-profiles/oiioii.md) — OiiOii 整合，**§0 = 2026-06-08 大改版 SOURCE OF TRUTH**（新入口/Agent▾選模型/i2v/一致性/新模型）
+  - [flow.md](automation/site-profiles/flow.md) — Google Veo 3.1 + Gemini Omni Flash（完整 Phase 1-6 + 生成偵測看 gallery tile）
+  - [kling.md](automation/site-profiles/kling.md) — Kling 3.0（完整 Phase 1-7 + credits + Fast-Track）
+
+**⚠️ 部分/stub（有 UI 地圖但未全驗）：** suno / midjourney / seedream / runway / vidu / ideogram
+
+**🔴 停運：** sora（不支援自動化，新案改 Veo/Kling/Runway）
+
+**📝 [_template.md](automation/site-profiles/_template.md)** — 新網站 profile 模板
+
+> 使用者說「幫我直接操作 XXX」時：先確認該站在上列。**未列出者告知「該平台暫不支援全自動化，但我可代寫 prompt 讓你貼上去」**。
 
 **3. 高層流程速查 (每站登入與主流程概述)**
 - [automation/browser-guide.md](automation/browser-guide.md)
@@ -269,7 +301,9 @@ Prompt 寫完問自己：
 
 ## 版本資訊
 
-**平台知識最後校準：2026-06（v1.5.0 全平台 reference 升級 + WebSearch 驗證）。** 各 reference 檔末尾有官方文件連結 — **若要執行會花錢/產生後果的操作前，優先拿 reference 連結當最終依據**，因為版本/定價變動快。
+**平台知識最後校準：2026-06（OiiOii 大改版實機重測 + 多模型 cheatsheet + 全面 audit 優化）。** 各 reference 檔末尾有官方文件連結 — **若要執行會花錢/產生後果的操作前，優先拿 reference 連結當最終依據**，因為版本/定價變動快。
+
+**外部資源（官方文檔 / API / 社群 / 緊急更新連結）** → [references/external-resources.md](references/external-resources.md)。**2026 模型發布時間軸**（誰新誰舊/替代對象/何時選）見該檔的 Model Release Timeline 表。
 
 **2026-06 重大變動（已驗證）：**
 - 🔴 **OpenAI Sora 2 停運** — app/web 2026-04-26 已關，API 2026-09-24 關，資料永久刪除。新任務勿用，改 Runway Gen-4.5 / Veo 3.1 / Kling 3.0。

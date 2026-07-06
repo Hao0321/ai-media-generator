@@ -1394,3 +1394,252 @@ Dragon flies above erupting volcano while entire mountain collapses into flames 
 | 史詩戰爭 / IMAX | S10 | 英文 |
 
 **選擇規則：** 中國/亞洲文化主題 → 中文；西方/賽車/體育 → 英文。
+
+---
+
+## § Gemini Omni 多輪編輯範本 (Multi-Turn Interactive Editing Presets)
+
+**定位：** Gemini Omni 的招牌能力是「**對話式編輯**」—— 每個 turn 都在前幾 turn 的脈絡下理解指令（第 3 turn 改機位，模型記得第 1-2 turn 的角色/光線/場景）。五個 preset 示範如何利用這點做「基礎層 → 第一次修改 → 第二次修改」的無縫迭代，最後產出廣告級成品。
+
+> **使用方式：** 
+> 1. 把「基礎層」prompt 貼進 Gemini Omni（Flow PRO 或 Gemini app）
+> 2. 等出第一版影片或截圖
+> 3. 依「Edit Round 1」修改指令，Omni 會記得所有前文背景
+> 4. 若滿意就可輸出；若要進一步改進，用「Edit Round 2」指令
+> 5. 每個 turn 只改**一個變數**（例：改打光、改機位、改材質），別一次全改（無法歸因）
+
+---
+
+### 33. 產品廣告「精華液瓶」3 Turn 編輯（打光 → 角度 → 視角）
+
+**Use case:** 護膚/精品瓶類產品，多輪從棚拍→改打光→改機位，保持瓶身形狀 / 液位 / 配色全程一致
+**Target:** Gemini Omni Flash（Flow PRO），每 turn 4-6 秒推薦，16:9
+
+#### 【Base Prompt】
+```
+Create a 5-second premium skincare product video. The scene shows a crystalline
+glass serum bottle with a polished rose-gold dropper cap, standing upright on a
+wet black slate surface. The liquid inside is a luminous amber color. Soft,
+diffused studio lighting from the left side (45° key light), creating gentle
+reflections on the glass and slate. The background fades to pure black. Camera:
+static locked-off shot, slightly low angle (15° tilt up). Product takes up center
+frame with breathing room. No text, no branding visible. Premium, minimal,
+editorial aesthetic. No motion — just static hold on the product.
+```
+
+#### 【Edit Round 1 — 打光改進】
+```
+Keep everything identical (same product, same angle, same framing, same background).
+Now change the lighting: replace the left 45° key light with a DRAMATIC single 
+overhead spotlight, creating a strong rim light on the left edge of the bottle 
+and the dropper cap. The lighting should feel more luxe, more theatrical — like 
+a jewelry commercial. The amber liquid inside should glow with the top highlight.
+```
+
+**為什麼有效：** Omni 記得「rose-gold cap / amber liquid / black slate」，你只需改「light direction」這一變數。新 lighting 會自動套用在既有的產品構圖上，無需重寫整句。
+
+#### 【Edit Round 2 — 機位改變】
+```
+Keep the same lighting setup from the previous version (overhead spotlight with 
+dramatic rim light). Now change only the camera: perform a very slow, gentle 
+dolly-in from the current wide view, zooming in 15% toward the bottle center 
+over the full 5 seconds. The product shape and bottle position should remain 
+identical, only the camera pushes in. End frame is a medium close-up of the 
+dropper cap catching the highlight.
+```
+
+**Why 多層編輯有效：** Turn 2 明確寫 `Keep the same lighting setup from the previous version` → Omni 理解「上一版本的打光保留」。你只改運鏡（dolly-in），產品和光源不變。三 turn 下來 = 精華液瓶從「靜態棚拍」→「強烈打光」→「推進特寫」，全程瓶身完整一致。
+
+**Swap points:** `rose-gold cap` 換其他金屬色（銀/鍍金）；`amber liquid` 換 `translucent clear` / `deep blue`；「overhead spotlight」可改 `chiaroscuro side-light` / `three-point Hollywood`。
+
+---
+
+### 34. 角色廣告「模特轉身」3 Turn 編輯（基礎姿勢 → 表情 → 動作細節）
+
+**Use case:** 時尚品牌人像，多輪控制角色姿勢/表情/肢體動作
+**Target:** Gemini Omni Flash，6 秒推薦，16:9
+
+#### 【Base Prompt】
+```
+Create a 6-second fashion commercial. A young woman in her 20s, wearing an 
+elegant ivory silk slip dress, stands facing the camera in a high-end minimalist 
+apartment. Warm golden afternoon light spills from a large window on the left, 
+creating soft shadows. She has a neutral, composed expression. The camera is 
+static, medium shot framed at eye level. Her posture is upright, arms relaxed at 
+her sides. Soft background bokeh (apartment interior blurred). Cinematic, 
+editorial, luxury fashion aesthetic. No motion of the character yet.
+```
+
+#### 【Edit Round 1 — 表情改進】
+```
+Keep the entire scene identical (same woman, same dress, same lighting, same 
+apartment, same camera angle). Change ONLY her expression and eye direction: 
+she should now turn her gaze slightly to camera-left (her left), as if looking 
+at something just off-frame. A subtle smile, confident and contemplative. Her 
+face should show more presence and emotion while the body remains in the same 
+pose. The moment should feel more intimate and intentional.
+```
+
+#### 【Edit Round 2 — 肢體動作】
+```
+Keep the expression and gaze from the previous version (looking off-frame with 
+subtle smile). Now add subtle body movement: her right hand should slowly rise to 
+rest gently on her collarbone, a graceful gesture over 3 seconds. The dress fabric 
+should catch light as her arm moves. Her body remains otherwise still. The 
+movement should feel natural and unhurried — like a fashion editorial moment. No 
+abrupt transitions.
+```
+
+**Why 有效：** Turn 1 鎖「表情」。Turn 2 在「現有表情」基礎上加「肢體動作」。角色的臉部 identity 全程保持一致，只疊加不同層面的動作。
+
+**Swap points:** `ivory silk dress` → `dark leather jacket` / `oversized sweater`；`afternoon light` → `cool evening blue` / `dramatic chiaroscuro`；手的動作 → `touching hair` / `crossing arms` / `adjusting necklace`。
+
+---
+
+### 35. 敘事短片「咖啡師手沖」3 Turn 編輯（場景 → 對白 → 配樂氛圍）
+
+**Use case:** 生活品牌短片，咖啡廳/食飲場景，從無聲→加音效台詞→加環境音
+**Target:** Gemini Omni Flash，8 秒推薦，16:9
+
+#### 【Base Prompt】
+```
+Create an 8-second narrative video. A barista in a light linen shirt is 
+concentrating on hand-pouring water over coffee grounds in a glass dripper. 
+Close-up of hands, steam rising. The café is minimalist: white walls, natural 
+wood counter, soft diffused north-facing window light. Shallow depth of field. 
+No background music, no dialogue. The sound is ambient café atmosphere — just 
+the quiet pour of water, slight steam sound. The barista's expression is focused, 
+almost meditative. Warm, intimate, educational vibe.
+```
+
+#### 【Edit Round 1 — 加台詞層】
+```
+Keep the scene, barista, lighting, and visual composition identical. Add audio: 
+the barista should speak a brief, quiet line (in a natural, conversational tone) 
+while pouring, something like "The water temperature matters most." The voice 
+should be male, calm, educational but not stiff. The line should sync with the 
+pour action around second 4. Keep all the ambient café sounds (pour, steam).
+```
+
+#### 【Edit Round 2 — 配樂與情緒】
+```
+Keep the barista's spoken line and all visual elements from the previous version. 
+Now add subtle background music: a gentle, minimalist piano or acoustic guitar 
+piece that complements the meditative mood. The music should enter softly around 
+second 2, rise very slightly during the pour (where the dialogue happens), then 
+fade gently to silence by second 8. The overall feeling should shift from purely 
+instructional to contemplative — still intimate, still coffee-focused, but with 
+more emotional resonance.
+```
+
+**Why 有效：** 三層堆疊。Turn 1 視覺凍結。Turn 2 加聲音層（台詞）。Turn 3 加音樂層，但台詞保留。每層獨立可控，全程場景/角色未變。
+
+**Swap points:** 台詞內容 → `"Three minutes, medium grind"` / `"The bloom comes first"`；角色性別 → 女性；背景樂風格 → `jazz ballad` / `ambient electronic`。
+
+---
+
+### 36. 美食廣告「蒸氣盛菜」3 Turn 編輯（菜品 → 蒸氣視覺 → 餐廳氛圍）
+
+**Use case:** 食飲品牌，從靜物美食→加蒸氣動態→加環境故事感
+**Target:** Gemini Omni Flash，7 秒推薦，16:9
+
+#### 【Base Prompt】
+```
+Create a 7-second food video. A ceramic bowl filled with steaming hot dumpling 
+soup — clear broth, delicate wontons, fresh green onion garnish, soft tofu. The 
+bowl sits on a light wood table with wooden chopsticks beside it. Warm golden 
+hour light from a window on the left. Camera: static, slightly elevated angle 
+(30° down-looking). Shallow depth of field, soft bokeh background (out-of-focus 
+restaurant interior). Warm, comforting, appetite-inducing. The soup is still 
+steaming but no movement yet — pure product showcase.
+```
+
+#### 【Edit Round 1 — 蒸氣動態】
+```
+Keep the bowl, broth, garnish, table, and lighting identical. Add subtle motion: 
+wisps of steam should rise continuously from the surface of the broth over the 
+7 seconds. The steam should move naturally with gentle air currents — rising, 
+curling, dispersing. It should look organic, not mechanical. Capture the 
+sensory moment of hot soup reaching your senses. No other movement — the bowl, 
+chopsticks, and background stay static.
+```
+
+#### 【Edit Round 2 — 餐廳故事感】
+```
+Keep the bowl, broth, steam motion from the previous version. Now expand the 
+background: as the camera slowly pulls back (a gentle 8% zoom-out over 7 
+seconds), reveal more context — the hands of someone reaching for the chopsticks 
+(just hands, arms visible at frame edge, not distracting). A second bowl being 
+placed by a server in soft motion at far left of frame (depth blur). Warm 
+restaurant ambient light on wood tables. The feel should shift from "food 
+product" to "dining experience story" while keeping the hero soup as focus.
+```
+
+**Why 有效：** 三層編輯。Turn 1 加「視覺動態」（蒸氣）。Turn 2 加「敘事層」（人物→服務→餐廳）。菜品完整保留，蒸氣保留，只新增周邊情節層。最終成品既有產品清楚度，又有生活氛圍故事感。
+
+**Swap points:** `wontons soup` → `ramen` / `braised meat rice`；`golden hour` → `warm indoor restaurant tungsten`；背景人物 → `wife's hands joining` / `child reaching for spoon`。
+
+---
+
+### 37. 精品揭幕「香水瓶全景」3 Turn 編輯（產品→打光技法→旋轉視角）
+
+**Use case:** 香水/香氛品牌，完整產品揭幕流程，多輪控制視角光感
+**Target:** Gemini Omni Flash，10 秒推薦，16:9
+
+#### 【Base Prompt】
+```
+Create a 10-second luxury fragrance product reveal. A cut-crystal glass 
+perfume bottle (Art Deco geometric facets) sits centered on a black marble 
+pedestal. The bottle contains deep amber liquid. Initial framing: wide 
+establishment shot showing the full pedestal and background (dark charcoal 
+cyclorama), the bottle in center with significant negative space. Camera: 
+locked-off static. Lighting: cool 5500K practical overhead spotlight creating 
+a single sharp highlight on the bottle's top facet. Minimal shadows, clean and 
+architectural. No motion. Premium, sculptural, precious object reveal aesthetic.
+```
+
+#### 【Edit Round 1 — Chiaroscuro 打光改進】
+```
+Keep the bottle form, marble pedestal, dark background, and camera framing 
+identical. Change ONLY the lighting approach: introduce a second light source 
+(dramatic side light from camera-left, warm golden 2700K) creating strong 
+Chiaroscuro contrast — half the bottle catches warm light with deep amber glow, 
+the other half falls into cool shadow. This should feel more cinematic, more 
+luxe, like a jewel commercial. The overhead cool light remains as secondary rim.
+```
+
+#### 【Edit Round 2 — 旋轉揭幕視角】
+```
+Keep the Chiaroscuro lighting from the previous version (warm side light + cool 
+overhead rim). Now add camera motion: a slow 90° clockwise orbit around the 
+pedestal over 10 seconds, beginning from the wide establishment view and 
+tightening slightly as it rotates. During the rotation, let viewers see the 
+bottle's facet geometry catch both the warm and cool lights differently from 
+each angle. End frame: bottle in 3/4 profile, catching maximum Chiaroscuro 
+contrast. Smooth, no jitter, one fluid motion.
+```
+
+**Why 有效：** Turn 1「打光」× Turn 2「運鏡」分離。瓶身形狀/液體顏色全程凍結，光與視角獨立疊加。最終看起來像專業 3D 渲染的豪華揭幕，但全是 multi-turn 對話控制。
+
+**Swap points:** `cut-crystal / Art Deco` → `frosted matte glass` / `minimalist cylinder`；`amber liquid` → `clear` / `pale rose`；`orbit 90°` → `full 360°` 或 `slow dolly-in only`；`Chiaroscuro` → `three-point lighting` / `single dramatic spotlight`。
+
+---
+
+## 🔑 Gemini Omni 多輪編輯黃金法則
+
+1. **每 turn 只改一個變數** — 打光 XOR 機位 XOR 動作 XOR 配樂，別同時改多個（無法歸因，Omni 容易混亂）
+2. **明確寫「Keep」語句** — 例 `Keep the lighting from the previous version` 防止 Omni 誤重做
+3. **用「從 X → Y」結構** — 例 `replace the left key light with overhead spotlight`，比「加強打光」更精準
+4. **不需重述「已鎖定」的元素** — 產品形狀、顏色、場景背景、主要角色，turn 2-3 別重寫，只寫「改什麼」
+5. **一鏡一運動**：如果是 multi-turn 加運鏡，務必 `ONE camera motion per shot`（avoid gimbal shake 或同鏡多次轉向）
+6. **時間錨點明確**：audio turn 要寫 `around second 4` 這樣的秒數錨點，Omni 才能同步台詞與視覺
+7. **降期待值**：Omni 對「極細節」(如「水珠悬浮角度」) 的控制不如 Kling Motion Brush，但對「光色 / 情緒層 / 廣域運鏡」的理解遠強於 i2v 模型
+
+---
+
+## 連動
+
+- 概念先行 → [concept-first-prompting.md](../references/concept-first-prompting.md)
+- 反瑕疵 → [quality-control.md](../references/quality-control.md)
+- Omni 完整技巧 → [../references/model-picker.md](../references/model-picker.md) § Gemini Omni
+- 多輪產品 i2v 基礎 → [§31 產品 Hero i2v](#31-產品-hero-i2v)

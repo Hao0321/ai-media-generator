@@ -107,7 +107,7 @@ no auto-tune, no 808 drums, no EDM drops
 - 列表每 4-5 秒自動 refresh (生成完進度 icon 會變封面)
 
 **試聽 (實測)：** 點封面圖 → 底部固定播放器出現：
-- 左下：封面縮圖 + 歌名 + 作者名
+- 左下：封面縮圖 + 歌名「夜貓」+ 作者「Hao0321」
 - 中央：🔀 shuffle / ⏮ prev / **⏸ play/pause (粉色 active)** / ⏭ next / 🔁 repeat
 - 進度條：當前時間 / 總長 (例 0:59 / 5:17)
 - 右下：📝 lyrics / 👍 / 👎 / 💬 / 📤 share / ⋯ / 🔊 volume

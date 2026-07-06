@@ -6,17 +6,17 @@
 
 | 網站 | 狀態 | 檔案 | 備註 |
 |---|---|---|---|
-| OiiOii.ai | ✅ 2026-04-18/19 | [oiioii.md](oiioii.md) | 完整 phase 1-3E (止於分鏡師付費牆 $7) |
+| OiiOii.ai | ✅ **2026-06-08 大改版重測** | [oiioii.md §0](oiioii.md) | **§0 = 新版 SOURCE OF TRUTH**（左欄導航/新建直進canvas/Agent▾模型器/新模型/i2v/一致性系統）。§1-§12 舊 UI 保留參考 |
 | Google Flow (Veo 3.1) | ✅ 2026-04-19 | [flow.md](flow.md) | **完整 Phase 1-6**，Fast/Quality/Lite 已測 |
 | Kling 3.0 | ✅ 2026-04-20 | [kling.md](kling.md) | **完整 Phase 1-7**，3.0 + Fast-Track + Native Audio |
 | Suno v5 | ✅ 2026-04-20 | [suno.md](suno.md) | **完整 Phase 1-9** + Speed Optimization (5 首歌 chain SOP) |
 | Midjourney v7 | 📝 Stub | [midjourney.md](midjourney.md) | Web + Discord 兩種模式 |
 | Seedream (即夢 / 豆包) | 📝 Stub | [seedream.md](seedream.md) | 三入口 + 中國區登入特殊 |
 | Runway Gen-4 / Aleph / Act-Two | 📝 Stub | [runway.md](runway.md) | Gen-4 Refs (3 圖) + Act-Two mocap |
-| Sora 2 | 📝 Stub | [sora.md](sora.md) | 需 ChatGPT Plus，Cameo 機制 |
+| Sora 2 | 🔴 **已停運** | [sora.md](sora.md) | app/web 2026-04-26 關、API 2026-09-24 關。**不支援自動化，新案改 Veo/Kling/Runway** |
 | Vidu Q3 | 📝 Stub | [vidu.md](vidu.md) | Q3 1-7 ref + 16s 多鏡含音 |
 | Ideogram 3 | 📝 Stub | [ideogram.md](ideogram.md) | 強文字渲染 (海報 / Logo) |
-| Seedance 2.0 pro | ✅ 2026-04-21 | [../oiioii.md §12.9](oiioii.md) | 透過 OiiOii 聚合操作 5 次，8 維公式 + Constraints tail 證據見 [../../references/seedance.md](../../references/seedance.md) |
+| Seedance 2.0 pro | ✅ 2026-04-21 | [oiioii.md §12.5](oiioii.md) | 透過 OiiOii 聚合操作 5 次，8 維公式 + Constraints tail 證據見 [../../references/seedance.md](../../references/seedance.md) |
 | Seedance / Volcengine (直入) | ⏳ 未驗證 | 待操作時補 | 官方入口尚未操作，Multi-shot Cut to: 語法 |
 | Flux (BFL / fal.ai / Replicate) | ⏳ 未驗證 | 待操作時補 | 見 references/flux.md |
 | Stable Diffusion (A1111 / ComfyUI) | ⏳ 未驗證 | 待操作時補 | 本地工具 |

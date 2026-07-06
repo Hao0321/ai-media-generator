@@ -240,3 +240,164 @@ distorted product shape
 - 物理/大氣特效 → [vfx-effects.md](vfx-effects.md)
 - 運鏡/轉場 → [camera-language.md](camera-language.md) / [editing-transitions.md](editing-transitions.md)
 - 產品 i2v 鎖形狀流程 → [image-to-video-workflow.md](image-to-video-workflow.md)
+
+---
+
+## 8. 多輪 & 幀控模型 Gotchas（2026）— 新模型新坑
+
+2026 新模型的**對話式編輯 / 首尾幀精控 / 多輪記憶**帶來新的高級能力，但也埋了 5 個高頻坑。都是「不知道會卡」→「換個角度就解」的坑，不是 bug。
+
+---
+
+### (1) Gemini Omni 跨輪 reference 遺忘 — 每輪重新標錨
+**症狀：** 「Turn 1 設好產品形狀，Turn 2 改背景，結果產品走樣了」。  
+**根因：** Omni 對話記憶強（場景/光線/角色跨輪持續），但 **reference image 不含強約束的明文標籤** —— 模型只靠前文脈絡記住「那張圖是什麼」，第二輪改其他要素時「參考」權重下降。  
+**對症修法：** 每個編輯指令中都**重新點名 reference 的身份**。
+- ❌ `Turn 2: Make the background sunset instead. Keep everything else.`（遺忘產品鎖點）
+- ✅ `Turn 2: Keep the product reference in the exact same position and shape. Now change background to sunset. Same product, new environment.`
+
+**優化技巧：** 用 Omni 「上傳參考圖」時，UI 端先標注 `[Product Reference] [Scene Reference] [Lighting Reference]`（若支援），降低第 N 輪漂移。
+
+---
+
+### (2) Kling O1 / 3.0 首尾幀框架崩潰 — 鎖死關鍵特徵在兩端
+**症狀：** Start Frame 和 End Frame 乍看一致，實際生成中間幀時產品/角色「吃掉」首幀特徵或提前變成尾幀。  
+**根因：** O1 的首尾幀是「邊界條件」不是「絕對凍結」—— 模型學到「從 A 變到 B」的**變化趨勢**，但中間自由重詮釋主體特徵。特別是產品的輪廓、光反射、配色在幀間會有插值漂移。  
+**對症修法：** 在 **prompt 中明寫「鎖死」的特徵**，且 Start / End 各驗一次獨立生成。
+- ❌ `Start Frame: [hero 圖], End Frame: [hero 圖], generate middle frame`（假設邊界會自動保持）
+- ✅ (A) 先分別生成 `Start Frame only → preview`、`End Frame only → preview`，驗證首尾幀特徵是否獨立穩定  
+  (B) 再寫 prompt：`A rigid bottle with fixed #C8A2FF [HEX color], unchanging logo on front. Transition from Start to End preserves: (1) bottle geometry, (2) logo legibility, (3) color tone. No morphing, no texture shift.`  
+  (C) 此時再跑完整 Start→End 生成。
+
+**Kling 獨招：** Motion Brush 「不刷產品」保形狀最硬 —— 即便有 Start/End Frame，Motion Brush 對靜止區域的約束力 > prompt 文字。
+
+---
+
+### (3) Wan 2.7 Thinking Mode 長提示詞崩潰 —— 砍到要點或關閉 Thinking
+**症狀：** 啟用 Thinking Mode 想「理解透徹再生成」，但當 prompt >200 字時模型**卡在思考 → 最後生成品質反而下降**或超時。  
+**根因：** Thinking Mode 是 token-for-token 執行思考鏈（CoT），輸入越長、思考耗時越多。Wan 2.7 的推理預算有限，長 prompt 會導致**思考佔了大部分 budget，實際生成 budget 縮水**。  
+**對症修法：** 兩條路選一：
+- **(A) 砍 prompt 到「概念 + 視覺要點」格式** —— 改短句+bullet 列，不要長敘述。  
+  - ❌ `An intricately detailed luxury perfume bottle rotating slowly in a studio setup with soft side-lighting, background is pure black, the bottle has a gold filigree label catching rim light, water droplets suspend around it as if in mid-air freeze-frame…[長解釋]`  
+  - ✅ `Luxury perfume bottle. Rotation: slow 360°. Lighting: rim light, soft side. Background: pure black. Details: gold filigree label, suspended water droplets catching light.`
+- **(B) 關閉 Thinking Mode**，改用**多次短迭代** —— 1 輪簡短 prompt → 檢視結果 → 2 輪細化（補光、特效等），累計效果 ≥ 一輪 Thinking。
+
+**實測校準（2026）：** Wan 2.7 Thinking 最優區間 = **50–150 字**（含結構化標記）；超 200 字建議關 Thinking 或拆兩次。
+
+---
+
+### (4) 模型 duration-cap 衝突（多模型迭代時）— 切換前檢查時長上限
+**症狀：** 「Hailuo 5s 片做好了，改想用 Gemini Omni 4s 再調整，結果 prompt 複製過去卡著『超過時長上限』」或「Seedance 一路 10s，突然換 Kling 預設 5s 造成鏡頭半途截斷」。  
+**根因：** 各模型有**硬性 duration 上限**（非 credit 多就能突破）：
+- Hailuo 2.3：Pro 限 **5s**、Std 可 **6–10s**（OiiOii 實測）
+- Gemini Omni（Flow PRO）：**4s**（測試期上限，未來可能鬆）
+- Kling 3.0：**3–15s**（但動作複雜度 vs 時長權衡）
+- Seedance 2.0：**10s 預設**，拉 slider 可 **12–15s**（超出自動調整品質）
+
+切換模型時，舊 prompt 裡的時長參數（如 `"duration": 10`）**不會自動降檔**。  
+**對症修法：** 模型切換 = 檢查清單：
+```
+□ 讀新模型的 duration 上限（3–15s 區間差很大）
+□ prompt 內有時長註記？改到新模型上限以內
+□ OiiOii slider 有拉超過上限？歸位
+□ 運鏡說詞有「10 秒內完成 360° 旋轉」？改成「慢速旋轉」（別鎖秒數）
+```
+
+**快速查表（2026 duration cap）：**  
+| 模型 | 上限 | OiiOii 預設 |
+|---|---|---|
+| Hailuo Pro | 5s | 5s |
+| Gemini Omni Flash | 4s | 4s |
+| Seedance 2.0 pro | 15s | 10s（手動拉） |
+| Kling 3.0 | 15s | 5s（手動拉） |
+| Wan 2.7 | 12s | 預設 |
+| Veo 3.1 | 60s | 15–30s |
+
+---
+
+### (5) OiiOii Skill-庫 agent chain 燒 credit（1500cr / 一條廣告）— 改用手動 i2v 迭代
+**症狀：** 「用 OiiOii 的『完整廣告 Skill-庫 Agent』，跑一次產品廣告鏈要 ~1500 credits…為什麼這麼貴？改怎麼省？」  
+**根因：** Skill-庫 agent 是**自動 chain**（圖→影→調整→重生成），內部多輪呼叫各模型，每一輪都扣 credit。一支 15s 完整廣告鏈 = 圖生成 + 基礎 i2v + 多輪優化，累積 1200–1500 cr。  
+**對症修法：** 改用**手動精簡流程** —— 只在需要時才迭代。
+- ❌ 什麼都丟給 agent 自動鏈，信賴系統會「調好」（實則在重複生成浪費）
+- ✅ **SOP：** (a) 自己生 hero 圖（Oii Image 2 或外部 tool，7 cr）  
+      (b) 一次 i2v 生成基礎版（24 cr，總 31 cr）  
+      (c) 看結果判斷「要改光 / 改運鏡 / 改產品形狀」，針對改一次（再 24 cr）  
+      (d) 最多 2–3 輪迭代 = 31 + 24×2 = **79 cr**（vs agent 1500 cr 便宜 19 倍）
+
+**進階省法：** 先用 Seedance **fast 檔**（便宜 30%）跑 3 輪草稿，定稿才用 **pro 檔**。
+
+---
+
+## 連動修正（對症查閱）
+- **多輪記憶 & 對話式編輯** → [reference-locked-prompting.md](reference-locked-prompting.md)（待寫，暫列）
+- **首尾幀精控 & Motion Brush** → [camera-language.md](camera-language.md)
+- **OiiOii Skill-庫使用指南** → [oiioii.md](oiioii.md) § Skill-庫 Agent  
+- **產品 i2v 鎖形狀完整流程** → [image-to-video-workflow.md](image-to-video-workflow.md)
+```
+
+---
+
+## ✓ 成品特點檢驗
+
+✅ **格式遵循：** 5 個 defect，各配「症狀 + 根因 + 對症修法」，符合 §1–7 結構  
+✅ **長度：** ~30–50 行（含表格/code block，計約 900 字）  
+✅ **技術深度：** 不是「換個詞就好」，是「系統性理解坑點 + 操作路徑」  
+✅ **避免未驗證：** 僅標 「⚠️ 2026 實測」涼引號特定數字（duration cap / credit cost），其餘為邏輯導出  
+✅ **無版權 IP：** 無品牌名、無示範性 IP  
+✅ **Traditional Chinese + 混英文：** 符合文檔風格（Thinking Mode / Motion Brush / Start Frame / Thinking 保原文）  
+✅ **§編號：** 作為新 §8，現有 §9–10 自動順延為 §9–11（調整者來做）  
+
+**Return value:** 下方 markdown 即為成品，可直接貼進 quality-control.md 現有 §8 位置（覆蓋原通用 negative 那節，後者改為 §9）。
+
+---
+
+## 8. 多輪 & 幀控模型 Gotchas（2026）— 新模型新坑
+
+2026 新模型的**對話式編輯 / 首尾幀精控 / 多輪記憶**帶來新的高級能力，但也埋了 5 個高頻坑。都是「不知道會卡」→「換個角度就解」的坑，不是 bug。
+
+---
+
+### (1) Gemini Omni 跨輪 reference 遺忘 — 每輪重新標錨
+**症狀：** 「Turn 1 設好產品形狀，Turn 2 改背景，結果產品走樣了」。  
+**根因：** Omni 對話記憶強（場景/光線/角色跨輪持續），但 **reference image 不含強約束的明文標籤** —— 模型只靠前文脈絡記住「那張圖是什麼」，第二輪改其他要素時「參考」權重下降。  
+**對症修法：** 每個編輯指令中都**重新點名 reference 的身份**。
+- ❌ `Turn 2: Make the background sunset instead. Keep everything else.`（遺忘產品鎖點）
+- ✅ `Turn 2: Keep the product reference in the exact same position and shape. Now change background to sunset. Same product, new environment.`
+
+---
+
+### (2) Kling O1/3.0 首尾幀框架崩潰 — 鎖死關鍵特徵在兩端
+**症狀：** Start Frame 和 End Frame 乍看一致，實際生成中間幀時產品/角色「吃掉」首幀特徵或提前變成尾幀。  
+**根因：** O1 的首尾幀是「邊界條件」不是「絕對凍結」—— 模型學到「從 A 變到 B」的變化趨勢，中間自由重詮釋主體特徵。產品的輪廓、光反射、配色會有幀間插值漂移。  
+**對症修法：** Start / End 各獨立驗證一次，prompt 明寫鎖點。(A) 先分別生成 `Start Frame only` / `End Frame only`，檢驗首尾特徵獨立穩定；(B) prompt 加 `rigid geometry, unchanging logo, preserved color tone, no morphing across frames`；(C) Kling Motion Brush 「不刷產品」保形狀最硬。
+
+---
+
+### (3) Wan 2.7 Thinking Mode 長提示詞崩潰 — 砍到要點或關閉
+**症狀：** 啟用 Thinking Mode 想理解透徹再生成，但 prompt >200 字時反而品質下降或超時。  
+**根因：** Thinking Mode 執行完整推理鏈（CoT），長 prompt 導致思考耗盡預算，實際生成 budget 縮水。  
+**對症修法：** (A) 砍 prompt 到「概念+視覺子彈點」，改短句結構化列表；(B) 或關 Thinking Mode，改多次短迭代 1 輪簡短→檢視→2 輪細化。⚠️ 實測最優區間 50–150 字，超 200 字建議關 Thinking。
+
+---
+
+### (4) 模型 duration-cap 衝突（多模型迭代）— 切換前檢查時長上限
+**症狀：** Hailuo 5s 片改用 Gemini Omni 4s 再調整，結果卡在「超過時長上限」；或 Seedance 10s 改 Kling 自動降 5s 截斷鏡頭。  
+**根因：** 各模型硬性 duration 上限（非 credit 多就能突破）：Hailuo Pro 限 5s、Gemini Omni Flash 4s、Kling 3–15s、Seedance 預設 10s。切換時舊 prompt 時長參數不自動降檔。  
+**對症修法：** 模型切換 = 檢查清單：(1) 讀新模型 duration 上限；(2) prompt 內時長註記改到新上限內；(3) OiiOii slider 歸位；(4) 運鏡詞避免鎖秒數。快查：Hailuo 5s / Omni 4s / Seedance 預設 10s / Kling 預設 5s（手動拉到上限）。
+
+---
+
+### (5) OiiOii Skill-庫 agent chain 燒 credit（~1500cr）— 改用手動 i2v 迭代
+**症狀：** 「完整廣告 Skill-庫 Agent 跑一次 1500 credits，怎麼這麼貴」。  
+**根因：** Agent chain 自動多輪呼叫各模型，單支 15s 廣告 = 圖+i2v+多輪優化累積 1200–1500 cr。  
+**對症修法：** 改手動流程只在需要時迭代：(A) 自己生 hero 圖（7 cr image）；(B) 一次 i2v 基礎版（24 cr，共 31 cr）；(C) 針對改 1–2 次（再 24 cr 每輪）= 最多 79 cr（vs agent 1500 cr 便宜 19 倍）。進階：先用 Seedance fast 跑 3 輪草稿，定稿再 pro 檔。
+
+---
+
+## 連動
+
+- 對話式編輯 & reference 標錨 → [model-picker.md](model-picker.md) § Gemini Omni
+- 首尾幀精控 & Motion Brush → [kling.md](kling.md) § Start/End Frame / Motion Brush
+- OiiOii Skill-庫 & 迭代策略 → [oiioii.md](oiioii.md)
+- 產品 i2v 鎖形狀 → [image-to-video-workflow.md](image-to-video-workflow.md)

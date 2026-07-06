@@ -253,7 +253,7 @@ Corporate headshot of a middle-aged Asian businessman, navy suit, neutral gray b
 ## 🎯 跨模型 workflow 組合（實戰）
 
 ### 寫實戰鬥短片（當前 use case）
-1. **Nano Pro / Midjourney V8.1 + Aria ref** → 生 key frame 圖（含武打氛圍）
+1. **Nano Pro / Midjourney V8.1 + Hao0321 ref** → 生 key frame 圖（含武打氛圍）
 2. **Kling 3.0 / Runway Gen-4.5 / Veo 3.1** 用該圖做 i2v（Sora 2 🔴 已停運，不再列為活平台）
    - Kling：40-80 字、handheld + whip pans
    - Runway Gen-4.5：25-60 字、`camera tracks from behind` + low-angle（接替 Sora 2 bodycam 寫實感）

@@ -48,7 +48,7 @@ Generative-AI prompts are **not portable**. The same idea sent to Flux vs Midjou
 
 - **Midjourney V8.1** loves comma-chunked detail + `--style raw --stylize 750`
 - **Flux** strips out director names but rewards 80-200 word natural paragraphs with technical photography vocabulary
-- **Seedance 2.0** uses **bracketed labels** (`[Style] [Scene] [Character] [Shot 1: 00:00-00:05]`), eats lens focal lengths + format anchors (`Sony A7S3`, `IMAX Fantasy Camera`, `Unreal Engine 5`), supports native 4-modal audio (`Sound design:`) and bilingual lip-synced dialogue. Chinese preferred for 武打 / 古裝 / romance / MV.
+- **Seedance** (中文訓練) treats English director names as weak signal — it wants concrete visual nouns in Chinese, plus a Constraints tail (`不抖動、不變形…`)
 - **Sora 2** wants "format anchors" (`bodycam footage`, `surveillance`) and quoted dialogue — 🔴 app/web 已於 2026-04-26 停運（API 撐到 2026-09-24），新任務改用 Runway Gen-4.5 / Veo 3.1 / Kling 3.0
 - **Veo 3.1** is the only model where SFX / Ambient tags actually generate audio
 
@@ -106,7 +106,7 @@ A wrong prompt costs ~10 minutes of regeneration + token waste. A slow submit co
 
 Every prompt **must** embed 5-8 high-signal tokens from the appropriate vocabulary layer (director / DP / lens / film-stock / lighting / grading / composition / VFX). Generic words (`cinematic`, `8k`, `beautiful`, `masterpiece`) are banned — they dilute signal.
 
-**Platform-aware exception:** Director names work on Midjourney / Sora 2 / Veo but **get stripped** by Flux / Nano Banana Pro. For Seedance / Wan, **individual DP names** are weak signal, but **art-movement / brand-style names** (Pixar / Ghibli / 90s anime / Fast and Furious / Bloom & Wild) **do work**. The skill bakes this nuance into the selection logic.
+**Platform-aware exception:** Director names work on Midjourney / Sora 2 / Veo but **degrade** Flux / Nano Banana Pro / Seedance / Wan output. The skill bakes this into the selection logic.
 
 ### 🤖 Auto-Pilot mode
 

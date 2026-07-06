@@ -2,6 +2,49 @@
 
 All notable changes to this skill are documented here.
 
+## [2.0.0] - 2026-06-11 — 全面 audit 優化：更強 · 更準 · 更直覺
+
+Comprehensive skill audit (6-agent workflow across accuracy / consistency /
+routing / gaps / structure) + fixes. User ask: 更強、更準、更直覺.
+
+更準 (accuracy — stale-fact purge):
+- Sora 2 fully de-listed as active: references/oiioii.md (DreamActor-M1 backend,
+  video-model options), automation/site-profiles/oiioii.md:587, site-profiles/README.md.
+- GPT-Image2 (removed from OiiOii 2026-06-08) -> Oii Image 2 [Best]: 11 refs in
+  references/image-to-video-workflow.md replaced + banner; fixed the wrong
+  "GPT-Image2 改名 Gpt 4o" claim at oiioii.md:1665.
+- references/oiioii.md: top SOURCE-OF-TRUTH banner pointing §1-§12 (2026-04 old UI)
+  to site-profiles/oiioii.md §0 (2026-06-08 redesign) — resolves ~5 staleness/
+  consistency/duplication findings with one edit.
+- site-profiles/README.md: OiiOii row -> 2026-06-08 re-verified §0; Sora row -> 停運;
+  fixed broken ../ relative links.
+
+更直覺 (routing/discoverability):
+- SKILL.md 🎯 快查表 (3-second intent->file table) after Auto-Pilot — covers
+  瑕疵/概念/選模型/角色一致/i2v/音樂vs音效/MV/preset/導演風格/超短廣告/自動化/免費.
+- 4 orphaned reference files now routed: nano-banana, director-style-library,
+  external-resources, image-to-video-workflow.
+- Image section: added Oii Image 2 [Best] flagship + GPT-Image2-removed footnote.
+- Automation routing rewritten status-tiered (✅完整/⚠️部分/🔴停運) for all profiles.
+- Stale counts fixed (30+檔/7000行 -> 55檔/14000行); version footer refreshed.
+- README dead links fixed (LICENSE + CHANGELOG.md now in dev tree).
+- Verified: 0 dead links across SKILL.md + README.md.
+
+更強 (content gaps — new 2026-model knowledge, drafted by 6-agent workflow):
+- NEW references/hailuo.md (216 lines) — Hailuo 2.3 Pro/Std character-performance
+  reference (version matrix, prompt anatomy, signature micro-expression tokens,
+  weaknesses, 3 worked examples).
+- NEW references/gemini-omni.md (303 lines) — conversational any-to-any model
+  (multi-turn editing, re-anchor per turn, multi-modal input, vs Veo 3.1).
+- references/quality-control.md §8 — 多輪 & 幀控 gotchas (Omni ref-drift, Kling O1
+  frame mismatch, Wan Thinking-Mode collapse, duration-cap conflict, Skill-庫 cost).
+- references/proven-prompts.md — 2026-06 curated new-model prompt blocks
+  (Oii Image 2 / Gemini Omni / Wan 2.7 / Kling O1 / HappyHorse).
+- templates/preset-packs.md — § Gemini Omni multi-turn editing presets (5).
+- references/external-resources.md — Model Release Timeline 2026 table.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+
 ## [1.8.6] - 2026-06-10 — OiiOii 大量實測「全部做」：一致性系統 + 拉片復刻 + 3 模型對比
 
 Completed all 3 remaining OiiOii test areas the user asked for (全部做).

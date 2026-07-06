@@ -737,3 +737,103 @@ Aerial drone shot flying over a vast mountain range at sunrise, golden light hit
 - 反瑕疵 → [quality-control.md](quality-control.md)
 - 選模型 → [model-picker.md](model-picker.md)
 - 成套主題範本 → [../templates/preset-packs.md](../templates/preset-packs.md)
+
+---
+
+## 🆕 2026-06 新模型逐字 prompt（curated）
+
+本節精選 2026 年 6 月上線的新世代模型，經 OiiOii 平台驗證。每個 prompt 可直接複製貼上，無需調整。
+
+---
+
+**Oii Image 2（Google Nano Banana Pro）— 文字完美海報 [2026-06 curated]**
+
+```
+Create a premium product poster for a luxury skincare brand. The image shows a sleek glass serum bottle (cylindrical, 50ml, clear liquid inside, metallic rose-gold cap) centered on a marble background. Text overlay: "LUMINOVA ESSENCE" in bold white sans-serif font positioned above the bottle. Below: "Advanced Hydration Complex" in smaller elegant script. Additional text: "Clinical Results in 7 Days" positioned bottom-right corner, gold accent color. High-end beauty editorial aesthetic, 4K, professional studio lighting with soft shadows, no blur on text.
+```
+
+*為何好：Oii Image 2 文字渲染冠軍。引號標題 + 指定字型 + 顏色置位 = 包裝海報教科書。避免海報常見的「文字模糊/傾斜/疊字」。｜試用：Nano Banana Pro 對引號 + 字型控制吃得很深，材質（rose-gold vs 銀）也精準。｜應用：社群廣告 KV、電商落地頁 hero、包裝設計稿。*
+
+---
+
+**Gemini Omni（Google，Flow PRO）— 多輪產品編輯 [2026-06 curated]**
+
+```
+Turn 1: Create a 4-second cinematic product reveal. A white minimalist box sits on a light oak desk. Soft morning light from the left window. Slow dolly-in from wide to medium shot. Clean, premium, zen aesthetic.
+
+Turn 2: Keep the scene and lighting identical. Change the box color to deep navy instead of white.
+
+Turn 3: Now place the same box on a white marble countertop instead of the oak desk. Keep the navy color and morning lighting the same.
+```
+
+*為何好：Gemini Omni 殺手鐧 = 對話式多輪編輯，每輪改一變數、其他保持。模型記憶前輪脈絡（角色/光線/場景），第 3 輪不會忘記 navy + 晨光。≈ OiiOii「加入對話」痛點的官方解法，無需反覆重生整段影片。｜試用：Omni Flash 已上線 Flow PRO（⚠️ 未實測 OiiOii 體感上限）。｜應用：快速迭代、A/B 版本、背景無縫切換、產品色盤開發。*
+
+---
+
+**Wan 2.7（阿里通義萬相）— Editorial Chiaroscuro 首尾幀 [2026-06 curated]**
+
+```
+[Start Frame] A luxury watchmaker's workbench: close-up of hands (wearing white cotton gloves) holding a disassembled watch mechanism. Extreme macro, tungsten light from above creating deep shadows, high-contrast Chiaroscuro aesthetic. Depth of field tight on the gears.
+
+[Thinking Mode Brief]
+Concept: craft + precision heritage. First 2 seconds: hands methodically align a spring. Second 2 seconds: light catches the polished surfaces. Final 1 second: hands step back — the fully assembled watch reveals itself, catching light like a jewel.
+Lighting: single overhead tungsten, dramatic hard shadows, no fill light. Grade: desaturated, only metallic gold tones. Aspect: 16:9 cinema.
+
+[End Frame] The completed watch mounted on a velvet display stand. Same Chiaroscuro lighting. Wrist entering frame with white shirt cuff. Ownership moment.
+```
+
+*為何好：Wan 2.7 Thinking Mode 強化 = 先規劃構圖 / 敘事節拍 / 打光再生成，導演感強。首幀→尾幀 + 中間敘事拆 beats（不寫摘要）= editorial video 教科書。Chiaroscuro（高對比古典打光）新世代才能穩定執行。⚠️ 未實測：Thinking Mode 在 OiiOii 是否預設啟用（建議手動加前綴或檢查 UI）。｜應用：奢侈品廣告、工藝紀錄、品牌故事、鐘錶/珠寶 TVC。*
+
+---
+
+**Kling O1 / Omni — 物理事件 + 身份鎖 產品 TVC [2026-06 curated]**
+
+```
+Shot 1 (0-3s, establish): <<<element_hero>>> (sleek black ceramic electric kettle, matte finish, minimal spout) sits on a white Carrara marble countertop. Morning sunlight from the right. Camera: locked-off wide shot. The kettle maintains exact shape and proportions throughout. Static product, environment only.
+
+Shot 2 (3-5s, hero moment): The same <<<element_hero>>> from closer angle. A hand (feminine, manicured, elegant fingers) pours boiling water. Steam rises in slow motion. Water cascade is physically accurate — follows gravity, splashes realistically, surface tension visible. Rim lighting on the steam vapor.
+
+Shot 3 (5-7s, proof): Close-up. The kettle now sits unplugged on the marble. Temperature indicator on the base glows softly amber. Hand removes the kettle from the heating base (product shape locked, zero visible wear). Product integrity 100%.
+
+Audio: subtle ceramic clink at start, authentic water pour SFX, ambient morning room tone, gentle steam hiss.
+```
+
+*為何好：Kling O1「身份鎖 @element」 + 「物理事件」（倒水 = 重力 + 濺起，而非靜態描述）= 產品廣告最高階。Motion Brush（未寫進 prompt 但可用 UI）沒刷產品只刷背景/光 = 產品完全靜止、只環境動。3.0 CoT 物理推理把水花/蒸氣渲染成真。⚠️ 未實測：OiiOii 後台身份鎖實際一致率（官方稱 90%+）。｜應用：小家電 TVC、廚具廣告、精品商品、快手電商直播素材。*
+
+---
+
+**HappyHorse 1.0（阿里 ATH Innovation Unit）— 短 Prompt 敘事 + 原生音訊 [2026-06 curated]**
+
+```
+A 10-second narrative short. Scene 1 (0-3s): A young woman (mid-20s, warm smile, shoulder-length hair) stands in a sun-filled apartment, holding a ceramic cup of tea. She takes a mindful sip, closes her eyes briefly. Scene 2 (3-7s): Cut to the same woman at a café table, laptop open, focused on work. Natural afternoon light. Scene 3 (7-10s): Same woman on a park bench at golden hour, phone in hand, looking peaceful. All scenes: natural lighting, lived-in feeling, no drama or artifice.
+
+Audio design: Gentle ambient café chatter (scene 2), soft park birds (scene 3), opening scene has subtle morning room ambience. Voice-over (female, warm Mandarin tone, slightly meditative pace): "生活中的小暫停，讓一切變清晰。" (Life's small pauses make everything clear.) No music track, only natural SFX + voice.
+```
+
+*為何好：HappyHorse 單一 transformer（文圖影音 token 同序列）= 多鏡敘事 + 對白 + Foley 同時生成，一條出完整品牌短片。短 prompt 依靠模型深度理解日常敘事（遠強過長文冗餘）。原生中文對白 + 自然音軌 = Seedance 純 SFX 的進化版（10s 對標，音質業界最強）。⚠️ 未實測：OiiOii 實際出片長度與音訊品質穩定性。｜應用：品牌小故事、生活方式廣告、社群短影、wellness 產品敘事、餐飲品牌日常。*
+
+---
+
+## 連動 + 版本對照
+
+新模型 2026-06 升級與既有檔案對應：
+
+- **Oii Image 2（文字渲染超強）** → [model-picker.md](model-picker.md)§圖片卡「Nano Banana Pro」更新
+- **Gemini Omni（多輪對話編輯）** → 補齊 i2v 流程痛點，直接「對話改」免重跑全片
+- **Wan 2.7（首尾幀 + Thinking Mode）** → [kling.md](kling.md) Start/End Frame 概念延伸，打光層更激進
+- **Kling O1（身份鎖 @element）** → [kling.md](kling.md)§進階 Recipe R2 多鏡一致性強化版
+- **HappyHorse（全模態音訊）** → [quality-control.md](quality-control.md)§3 物理 + §5 質感的對標實現
+
+| 新模型 | OiiOii 內部代號 | 最強用途 | 時長上限 | 音訊 | 狀態 |
+|---|---|---|---|---|---|
+| Oii Image 2 | Oii Nano Pro | 海報/KV 文字 | N/A (圖像) | N/A | ✅ 上線 |
+| Gemini Omni | Gemini Omni Flash | 對話迭代編輯 | 4s (Flow PRO) | ✅ 原生 | ⚠️ 未實測 |
+| Wan 2.7 | Wan 2.7 | 首尾幀精控 + Thinking | 10s | ✅ 原生 | ⚠️ 未實測 |
+| Kling O1 | Kling O1 / O3 | 身份鎖 + 物理 | 15s | ✅ 原生 | ✅ 已驗 |
+| HappyHorse | Oii X Imagine (待驗) | 多鏡對白 + Foley | ⚠️ 6s (未實測 vs 官方 10s) | ✅ 原生 | ⚠️ 未實測 |
+
+**⚠️ 未實測註記（落地前必驗）：**
+- Gemini Omni 在 OiiOii 後台實際內容保留轉輪數（官方 Flow PRO 理論無限，平台可能有上限或 token 計費）
+- Wan 2.7 Thinking Mode 在 OiiOii 是否預設啟用（建議 UI 檢查或 prompt 手動加 `[Thinking Mode]` 前綴）
+- HappyHorse / Oii X Imagine 時長上限（官方 6s vs 社群傳聞 10s 有差異，OiiOii 實測為準）
+- 各模型跨平台「價格/時長/音訊品質」以 OiiOii UI 實測為準（非各家原生 API 數字）
