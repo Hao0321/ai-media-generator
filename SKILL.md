@@ -45,6 +45,8 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 |---|---|---|
 | 「結果有瑕疵/爛掉/不夠精緻/閃爍/變形/塑膠感/文字怪」 | [quality-control.md](references/quality-control.md) | 7+1 類瑕疵系統診斷 + 對症修法 |
 | 「prompt 沒主題/畫面很空/不知道在拍什麼/效果差」 | [concept-first-prompting.md](references/concept-first-prompting.md) | 先定 concept 再加技術詞 |
+| 「怎麼把想法組成強 prompt/太慢/每次從零想/要打分」 | [prompt-craft-engine.md](references/prompt-craft-engine.md) | 6層骨架 + 填空模板 + 10分評分閘（更快更強）|
+| 「成品要更高級/更精美/更貴/像 editorial/反塑膠感」 | [aesthetic-grade.md](references/aesthetic-grade.md) | 打光比/調色/材質/鏡頭 DP 級配方（更精美）|
 | 「不知道用哪個模型/該用哪個平台/不熟各家」 | [model-picker.md](references/model-picker.md) | 決策樹 + 各家最強情境 |
 | 「角色要一致/同一個人出現多鏡/風格鎖定」 | [asset-library.md](templates/asset-library.md) + [multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) | 角色卡 + @element 身份鎖 |
 | 「圖生影片/i2v/img2video/參考圖鎖死/產品廣告鎖形狀」 | [image-to-video-workflow.md](references/image-to-video-workflow.md) | i2v 鎖形狀 SOP（產品廣告最穩） |
@@ -114,15 +116,13 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 **先查 [community-prompt-patterns.md](references/community-prompt-patterns.md)** — 該檔每個模型都有「禁忌」section，且註明 cross-platform 推翻歷史。
 
-### 驗證自檢
+### 驗證自檢（送出前必過 10 分評分閘）
 
-Prompt 寫完問自己：
-1. 查過 community-prompt-patterns.md 目標模型章節？
-2. Token 符合該平台簽名（不是隨手亂塞）？
-3. 避開該平台禁忌？
-4. 長度在甜蜜點（不過長不過短）？
+**每個 prompt 送出前，用 [prompt-craft-engine.md §3 的 10 分品質評分表](references/prompt-craft-engine.md) 打分 —— ≥8 才送，<8 回去補。** 每個跨平台垃圾詞（beautiful/masterpiece/detailed/high quality）額外 −1。
 
-4 題都過 → 送。缺一題回去改。
+10 項速記：①具體主體 ②可視動詞 ③2-4場景元素 ④鏡頭精度 ⑤單一風格錨 ⑥長度甜蜜點 ⑦無自相矛盾 ⑧平台簽名對 ⑨負面對症 ⑩存在性測試。
+
+**快速 4 題版（趕時間）：** 查過 community-prompt-patterns.md 目標模型？Token 符合平台簽名？避開禁忌？長度甜蜜點？—— 4 過才送。
 
 ## 核心原則
 
@@ -193,6 +193,8 @@ Prompt 寫完問自己：
 - **音效設計** (對白 / SFX / Foley / 配樂) → [references/sound-design.md](references/sound-design.md) — Veo 3.1 / Vidu Q3 原生音訊必讀
 - **剪接 / 轉場 / 節奏** (match cut / whip pan / J-L cut / ASL 律動) → [references/editing-transitions.md](references/editing-transitions.md) — 多鏡故事、storyboard、MV 必讀
 - **🎬 概念先行 Prompting** (prompt 沒主題/畫面很空/效果差/不知道在拍什麼) → [references/concept-first-prompting.md](references/concept-first-prompting.md) — **使用者嫌「prompt 沒主題」「有些畫面不知道在幹嘛」「影片效果差」時必讀**。治「技術詞堆疊但空洞」：先定一句話 concept → 3-beat 敘事弧 → 每個鏡頭做存在性測試 → 才加技術詞。含 6 個產品廣告概念框架
+- **⚙️ Prompt 組裝引擎**（有 concept 了但不知怎麼組成強 prompt / 想更快 / 要品質評分）→ [references/prompt-craft-engine.md](references/prompt-craft-engine.md) — **更強+更快的 META 引擎**：通用 6 層解剖（弱形容詞→強具體事實 before/after）+ 6 種媒材 <60 秒填空骨架 + **10 分品質評分閘（≥8 才送）**。流程位置：concept-first →（本檔組裝+評分）→ vocab 檔填字 → quality-control 修
+- **💎 精緻度分級（更精美）**（成品要像 editorial/commercial-award 級 / 反 AI 塑膠感 / 要「貴」）→ [references/aesthetic-grade.md](references/aesthetic-grade.md) — DP 級**可貼入配方**：打光 setup（方向+質感+光比）、調色科學（Kelvin/hue）、材質表面渲染（玻璃/金屬/皮膚/食物反塑膠 phrase）、鏡頭光學、大氣。比 cinematic-direction 的選單更深、給整段配方
 - **🔧 反瑕疵品質控制** (結果爛了/有瑕疵/不夠精緻怎麼修) → [references/quality-control.md](references/quality-control.md) — **使用者嫌結果有瑕疵、產品變形、塑膠感、閃爍、文字鬼影、動得很假時必讀**。系統化分類 7 類瑕疵 + 對症修法（鎖時間/鎖物理/鎖主體）+ 平台物理強弱速查
 - **🧭 模型選擇大全** (該用哪個模型 / 不熟各家模型) → [references/model-picker.md](references/model-picker.md) — OiiOii 全模型 + Gemini Omni / Kling O-series / Vidu / Hailuo / Wan / Seedance 各家「最強情境 + 招牌 prompt 技巧 + 何時選」+ 命名混淆對照（Gemini Omni vs Kling Omni）
 - **🎬 多模型影片操作手冊** (Wan 2.7 / Kling 3.0 Omni / HappyHorse 怎麼下 prompt / 拉片復刻 / 多模型省成本) → [references/multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) — Wan 2.7 Thinking Mode 完整 brief + Kling Omni 身份鎖(@element)+物理事件 + HappyHorse 短 prompt+原生音訊 + 拉片復刻先選模式 + 多模型 tier-by-cost/frame-chaining/per-model 重寫 + shot-type 選模型表。**用 OiiOii 新影片模型或要省成本跑多模型時必讀（2026-06 研究+實測）**

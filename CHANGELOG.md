@@ -2,6 +2,34 @@
 
 All notable changes to this skill are documented here.
 
+## [2.1.0] - 2026-06-11 — 提示詞升級：更強 · 更快 · 更準 · 更精美
+
+Prompt-craft elevation (2-phase workflow: produce -> adversarial-tighten, 8 agents).
+
+更強+更快 — NEW references/prompt-craft-engine.md (142 lines): the META assembly
+engine. Universal 6-layer prompt anatomy (weak-adjective -> strong-concrete
+before/after per layer), fill-in skeletons for 6 media types (<60s assembly),
+and a 10-point quality rubric (score >=8 to send, -1 per generic-garbage token).
+Wired into SKILL.md hard-rule 驗證自檢 as the send gate + 快查表 + Step 2.
+
+更精美 — NEW references/aesthetic-grade.md (117 lines): the "expensive/editorial"
+craft layer with paste-in DP-grade recipes (not just token menus): named lighting
+setups (direction+quality+ratio), color-grade science (Kelvin/hue), material/surface
+rendering (glass/metal/skin/food anti-plastic phrases), lens optics, atmosphere,
+anti-AI-slop quick list. Deliberately deeper than cinematic-direction's menus.
+Adversarial pass caught + fixed a live brand name, mislabeled Kelvin, and a
+contrast contradiction before landing.
+
+更準 — references/proven-prompts.md: NEW "🏆 各旗艦模型黃金骨架" (per-flagship
+best-practice fill-in skeleton: Veo/Kling/Seedance/Gemini Omni/MJ/Flux/Seedream/
+Ideogram/Runway — each rewards a different structure) + NEW "💎 精品級逐字 prompt"
+(8 editorial/award-level curated prompts across product/food/auto/beauty/fashion/
+jewelry/beverage/tech, each applying concrete lighting+grade+material+lens craft).
+
+All: no IP names, unverified specs flagged ⚠️未實測, 0 dead links verified.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+
 ## [2.0.0] - 2026-06-11 — 全面 audit 優化：更強 · 更準 · 更直覺
 
 Comprehensive skill audit (6-agent workflow across accuracy / consistency /

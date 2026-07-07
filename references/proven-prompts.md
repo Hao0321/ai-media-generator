@@ -837,3 +837,258 @@ Audio design: Gentle ambient café chatter (scene 2), soft park birds (scene 3),
 - Wan 2.7 Thinking Mode 在 OiiOii 是否預設啟用（建議 UI 檢查或 prompt 手動加 `[Thinking Mode]` 前綴）
 - HappyHorse / Oii X Imagine 時長上限（官方 6s vs 社群傳聞 10s 有差異，OiiOii 實測為準）
 - 各模型跨平台「價格/時長/音訊品質」以 OiiOii UI 實測為準（非各家原生 API 數字）
+
+---
+
+## 🏆 各旗艦模型黃金骨架 (Golden Templates)
+
+**定位：** 上面按「用途」分類；這節按「模型」分類。每個旗艦都有**一個它最吃、出片最準最快的填空骨架**——照它的脾氣寫，別每家都硬套同一結構。用法：挑模型 → 複製骨架 → 填 `[占位符]` → 對照填好範例微調。一致性鎖法與多鏡頭語法回查本檔最下方 [⚙️ 跨模型語法速查] 表。
+
+---
+
+**1. Veo 3.1 — 結構分層 + 原生音 3 層（dialogue / SFX / ambient）**
+
+骨架：
+```
+Shot: [shot type] of [主體 具體外觀/材質], [action 拆 beats].
+Setting: [場景 / 時間 / 光].
+Camera: [運鏡 push-in/crane/orbit], [lens / DoF].
+Style: [打光名詞] + [色盤] + [film grade：grain / halation / contrast].
+Audio — Dialogue: [角色] says in a [語氣] voice, "[台詞]". SFX: [具體音效]. Ambient: [環境底噪]. (no subtitles!)
+```
+填好：
+```
+Shot: Medium close-up of a barista in a linen apron, steaming milk then pouring a rosetta.
+Setting: A sunlit specialty coffee bar, morning, warm window light.
+Camera: Slow push-in, 50mm, shallow depth of field.
+Style: Soft key light + warm amber palette + fine film grain, gentle halation.
+Audio — Dialogue: The barista says in a calm friendly voice, "This one's on the house." SFX: milk steamer hiss, ceramic clink. Ambient: low cafe murmur. (no subtitles!)
+```
+*為何好：Veo 3.1 對「分層標籤 + 音訊當獨立層（對白／SFX／環境三分）」吃最深，結構化讓視覺與聲音幾近毫秒對齊；音訊當事後補會明顯錯位。片尾標 `film grain / halation / contrast` 這類具體收尾詞，比丟一句 `cinematic` 明確。｜來源 cloud.google.com Veo 3.1 guide / veo3ai.io native-audio guide 2026*
+
+---
+
+**2. Kling 3.0 — physics-as-events + 命名身份 handle + 針對式 negative**
+
+骨架：
+```
+[運鏡] + [場景]. <<<[hero_名]>>> ([主體 外觀/材質]) [動作寫成物理事件：重力/慣性/流體/碰撞].
+[Vibe / 光] + [Time / Audio].
+Negative: [只列本片這顆鏡頭會崩的具體部位，別堆通用垃圾詞]
+```
+填好：
+```
+Locked-off wide shot, a white ceramic bowl on a wood table. <<<hero_peach>>> (a ripe peach, fuzzy skin) drops from the top of frame, bounces once with real weight, then rolls to rest — gravity and inertia accurate.
+Soft daylight + shallow depth of field. Subtle fruit thud SFX.
+Negative: floating fruit, shape morphing mid-bounce, bowl warping, background drifting
+```
+*為何好：Kling 3.0 CoT 物理引擎獎勵「把動作寫成事件（重力+慣性+碰撞）」而非靜態形容；targeted negative 只點本顆會崩的部位（此片無手，就不列 extra fingers）壓崩壞率。⚠️ 未實測：`<<<hero>>>` 是本檔命名慣例，Kling 是否真解析 inline token 未證實——最可靠的身份鎖仍是 UI 上傳參考圖（Elements 功能）；OiiOii 後台一致率亦未實測。｜來源 kling.ai / klingaio.com 2026*
+
+---
+
+**3. Seedance 2.0 pro — 命名資產指派 role + 單一導演化鏡頭**
+
+骨架：
+```
+Single [shot type]: @[AssetName] ([此片中的 role：hero product / 主角] 外觀) [動作 + 運鏡]. [光 / 色盤]. [fps / 質感]. Reference @[AssetName] for consistent [shape / label / face].
+```
+填好：
+```
+Single macro shot: @SerumBottle (the hero product, frosted glass, 30ml, silver cap) rotating slowly on wet slate, rim light tracing the edge, a hand enters to lift it, a specular highlight sliding across the frosted glass. Cold clean palette. 60fps, creamy bokeh. Reference @SerumBottle for consistent shape and label.
+```
+*為何好：Seedance 2.0 pro 對「明確指派 role + 一次只導一個 shot」最穩；貪多鏡頭反而漂移，句末 `Reference @X for consistent...` 收尾鎖形。⚠️ 未實測：`@AssetName` inline token 是否被解析未證實——可靠的形狀/標籤鎖仍是 UI 上傳參考圖，prompt 命名只是配套。｜來源 vmake.ai / seedance.tv*
+
+---
+
+**4. Gemini Omni — 對話式 base + 定向編輯（每輪只改一變數）**
+
+骨架：
+```
+Turn 1: [完整 base 片：主體 + 場景 + 光 + 運鏡 + 時長].
+Turn 2: [只改一個變數]. Keep everything else identical.
+Turn 3: [再改一個變數]. Keep the [前面鎖的] the same.
+```
+填好：
+```
+Turn 1: 5-second clip: a matte black speaker on a walnut shelf, warm side light, slow dolly-in from wide to medium.
+Turn 2: Make it cool blue evening light instead of warm. Keep everything else identical.
+Turn 3: Now put the speaker on white marble instead of walnut. Keep the blue light and camera move the same.
+```
+*為何好：Omni 招牌對話式編輯——base 打底後每輪只動一變數 + 「Keep everything else identical」鎖其餘，靠跨輪記憶免重跑整片（OiiOii「加入對話」痛點的官方解）。⚠️ 未實測：OiiOii 後台實際保留的轉輪數。｜來源 opus.pro*
+
+---
+
+**5. Midjourney V8.1 — image-grammar 名詞短語 + `--sref`/`--sw`/`--ar`**
+
+骨架：
+```
+[主體 + 具體外觀], [場景/環境], [打光], [構圖/鏡頭], [色盤] --ar [比例] --sref [風格圖URL 或 style code] --sw [0-1000]
+```
+填好：
+```
+A weathered fisherman mending a net, harbor at dawn, soft backlit haze, medium shot low angle, muted teal-and-rust palette --ar 3:2 --sref 1234567890 --sw 300
+```
+*為何好：MJ 是「image grammar」——名詞短語堆疊（非長句），`--sref` 鎖風格、`--sw` 調風格權重（0-1000）、`--ar` 定比例。⚠️ 角色/物件鎖的 `--oref`/`--ow` 仍 **V7-only**（V8 版訓練中）——要鎖角色請切 V7 跑 `--oref`。｜來源 docs.midjourney.com / updates.midjourney.com*
+
+---
+
+**6. Flux 1.1 — 自然語言密集散文（無 tag、無藝術家名）**
+
+骨架：
+```
+[一段連貫散文：主體 front-load → 材質/表情 → 環境 → 打光 → 相機參數 (lens / aperture / shot type) → 色調/情緒]. 30–80 字，無逗號 tag、無 --參數、無藝術家名。
+```
+填好：
+```
+A close portrait of an elderly potter with clay-dusted hands, deep laugh lines and calm eyes, standing in a dim workshop lined with drying bowls, single soft window light from the left, shot on an 85mm lens at f1.8, muted earthy tones, quiet and contemplative mood.
+```
+*為何好：Flux 1.1 對「自然散文 + 密集具體細節（含 lens/aperture/shot type）」解析最好；逗號 tag 堆疊、`(quality:1.4)` 權重括號、藝術家名對它都是無效雜訊。｜來源 getimg.ai / imagetoprompt.dev 2026*
+
+---
+
+**7. Seedream 5.0 — 中文友善 + 雙引號鎖文字**
+
+骨架：
+```
+[完整句子描述畫面（中英皆可）]，畫面文字："[3-5 字精簡文案]"，字體 [bold sans-serif / thin serif]，位置 [置中 / 右下角]，[色盤]，輸出 2K/4K。
+```
+填好：
+```
+一張極簡風咖啡品牌主視覺，霧面米色背景中央一杯手沖咖啡與上升熱氣，畫面文字："日安 手沖"，字體 bold sans-serif，位置 咖啡杯上方，暖棕與奶油色盤，輸出 4K。
+```
+*為何好：Seedream 5.0 中文原生友善 +「雙引號鎖文字」對中英短字命中率業界領先；文字控在 3-5 字、指定字體/位置、出 2K/4K 才銳（長句、複雜排版會糊）。｜來源 replicate.com / evolink.ai / fal.ai*
+
+---
+
+**8. Ideogram 3 — 文字入圖控制 + style code 複用**
+
+骨架：
+```
+"[精確文案]"（放最前）on [載體 poster/sign/packaging], [字體描述], [高對比 前景色 on 背景色], [場景/風格], style: [Realistic / Design / General]. （滿意後存 style code 跨圖複用）
+```
+填好：
+```
+"OPEN LATE" on a neon diner sign, bold retro script, bright magenta letters on deep navy night sky, rain-slick street reflection below, style: Design.
+```
+*為何好：Ideogram 3 文字冠軍——引號文案「放最前 + 描述載體與外觀 + 高對比（避灰底灰字、藍字紫底）」命中率最高；找到滿意風格存 style code 跨圖鎖一致。｜來源 docs.ideogram.ai / mindstudio.ai*
+
+---
+
+**9. Runway Gen-4.5 — <60 字精簡 + 強物理運動**
+
+骨架：
+```
+[主體] [一個明確動作], [單一運鏡指令：方向 + 主體是否置中]. [物理質感：weight / momentum]. （總長 <60 字；i2v 時只寫「什麼在動」，場景交給圖）
+```
+填好：
+```
+A surfer carves down the face of a wave, camera tracks laterally left-to-right keeping her centered, spray flies with real weight and momentum.
+```
+*為何好：Gen-4.5 少即是多——「精簡（<60 字）+ 明確運鏡 + 強物理（weight/momentum）」比堆形容詞準；官方明講 i2v 用圖鎖場景、prompt 只描述運動。｜來源 academy.runwayml.com / imagine.art 2026*
+
+---
+
+> **一句話總結骨架脾氣**：Veo=分層+3 音軌｜Kling=物理事件+身份鎖｜Seedance=命名資產單鏡｜Omni=對話改一變數｜MJ=名詞短語+`--sref`｜Flux=自然散文｜Seedream=引號中文｜Ideogram=文字放最前｜Runway=短+物理。**照模型脾氣寫，比套通用結構更準更快。**
+
+---
+
+## 💎 精品級逐字 prompt（2026 editorial / award 級）
+
+**定位：** 上面是「能用」的 prompt，這節是**能拿獎的**。8 條跨最高價值品類、editorial / commercial-award 等級的逐字稿——每條把 **打光 + 色彩分級 + 材質渲染 + 鏡頭焦段**四層 craft 全部寫死，每個 token 都在幹活、沒有一個填充詞。用法：挑品類 → 換主體/品牌/色盤 → 貼上。配合 [concept-first-prompting.md](concept-first-prompting.md)（先有概念）+ [cinematic-direction.md](cinematic-direction.md)（craft 語彙庫）。
+
+> 精品級三鐵律：**(1) 光要「側」不要「平」**——正面平光=庫存感，側掠/逆光才立體。**(2) 材質要有「證據」**——毛孔 micro-shadow、金屬 specular pinstripe、絲綢 anisotropic sheen 是「這是真的」的訊號。**(3) 產品/主體全程清楚**（見 concept-first 血淚修正），craft 服務渴望、不是把產品抽象掉。
+
+---
+
+### 1. 精品香水 — 折疊焦散 macro reveal（**Veo 3.1**，原生音 + 敘事 beats）
+```
+Concept：一束硬光掠過切割水晶，把香氣「折」出來。
+[00:00-00:03] Extreme macro on a faceted crystal perfume bottle on wet black granite. A single hard key rakes the facets at a low grazing angle, throwing refracted caustic ribbons crawling across the stone. Anamorphic 65mm macro, T2.8, shallow focus.
+[00:03-00:06] Slow dolly-in + 20° arc. The amber liquid glows from within; a fine gold mist drifts up as the atomizer is pressed off-frame, every particle rim-lit against pure black.
+[00:06-00:08] Mist settles, caustics fold into a clean pool of light under the bottle; embossed logo holds razor-sharp and stable through the settle.
+Lighting: single grazing hard key + black flags, no fill, obsidian falloff. Grade: warm amber highlights, cyan-black shadows, silver specular retention. Material: refractive glass with internal caustics, condensation micro-beading. Audio: glass resonance, one atomizer hiss, sub-bass room tone.
+Negative: flat frontal light, milky low contrast, plastic glass, warped/wobbling logo, rainbow fringing, shadow banding.
+```
+*為何好：**grazing hard key + black flags + no fill** 是 folded caustics 的唯一來源（光必須側掠切面才折射）；**refractive glass + condensation micro-beading** 給玻璃實體感（否則透明玻璃會溶進背景）；**rim-lit mist against black** 把噴霧拉成 3D；**logo holds stable through the settle** 明令防 reveal 時崩字。*
+
+---
+
+### 2. 美食 hero — 逆光蒸氣 + 熔岩質感（**Kling 3.0**，液體黏稠 + 蒸氣物理較穩 ⚠️「O1／CoT 物理推理」為社群傳言未實測）
+```
+[Shot 1 — 0-3s, hero establish] 45° push on a dark molten chocolate cake on warm slate, one thread of steam rising through raking side light. 100mm macro, T4, tabletop food cinematography.
+[Shot 2 — 3-6s, money shot] A spoon breaks the crust; molten ganache flows out in slow motion, glossy and viscous, catching a warm back-rim. Steam curls through the light beam. Micro-bubbles and sugar crackle on the crust.
+[Shot 3 — 6-8s, texture close] Extreme macro on the flowing core, a surface-tension bead rolling off the spoon, condensation on the cold ceramic edge.
+Lighting: warm hard side key + white bounce for gloss + dark negative fill, backlit steam. Grade: amber, rich cocoa browns, espresso shadows, appetite-forward saturation held natural. Material: viscous specular ganache, matte crumb crust, real steam volume. Audio: crisp crust crack, soft molten pour, ambient kitchen warmth.
+Negative: flat dull light, dry plastic-looking food, fake CGI steam, neon oversaturation, clipped highlights, jittery slow-mo.
+```
+*為何好：**raking side key + backlit steam** 是關鍵——蒸氣只有逆光才看得見（食物片命門）；**white bounce for gloss + dark negative fill** 讓醬汁「亮在該亮、暗在該暗」= 立體油光；**surface-tension bead + micro-bubbles** 是「真食物」訊號；**appetite-forward saturation held natural** 拉食慾又不塑膠。*
+
+---
+
+### 3. 汽車 dynamic hero — 光雕鈑金 chiaroscuro（**Runway Gen-4.5**，運鏡 + 車漆反射最強）
+```
+Concept：光把金屬從黑暗裡雕出來。
+A matte-graphite performance coupe in a black cyclorama studio. A single long overhead soft strip light travels the length of the body while the camera trucks laterally — a bright specular line rolling across the door crease and rear haunch, sculpting the aerodynamic surface out of pure black. Low 30cm hero angle, 35mm anamorphic, T2.8. Pure chiaroscuro: extreme highlight-to-shadow, almost no midrange. Wet gloss floor throws a mirror reflection of the underbody glow. The car is static; only light and camera move.
+Grade: desaturated steel with one warm sodium accent on the rim, crushed blacks, silver specular retention. Material: metallic clearcoat with sharp rolling highlight, carbon-weave splitter.
+Negative: flat even fill, grey milky blacks, warped body panels, melted reflections, extra wheels, toy-car plastic look, logo distortion.
+```
+*為何好：**travelling strip light + trucking camera** 讓 specular line 滾過鈑金稜線 = 「光雕出車身」的核心手法（靜車動光，產品零變形）；**pure chiaroscuro / almost no midrange** 是精品車高級感的來源（一般片死在灰 midrange）；**wet gloss floor mirror + crushed blacks** 給體積與重量。*
+
+---
+
+### 4. 人像 beauty editorial — 柔光 + 真皮膚 SSS（**Veo 3.1**；先 **Flux 1.1 / Seedream 5.0** 生 hero 臉再 i2v 鎖五官）
+```
+Editorial beauty close-up, woman in three-quarter turn, eyes to lens. North-facing soft window light from camera-left as key, large negative fill on the right for a controlled 3:1 falloff. 85mm at f/1.8, focus on the near iris. Real skin: visible pores, fine vellus hair catching light, subsurface scattering warming the ear and nostril edges, faint sheen on the cheekbone — no retouching, no smoothing. Micro-expression: a slow breath, one blink, the faintest lip part.
+Grade: creamy neutral skin, desaturated background, warm highlight roll-off, filmic sensor grain. Material: dewy-not-oily skin, texture micro-shadow in every pore under the side key.
+Negative: plastic waxy skin, airbrushed poreless face, flat frontal beauty-dish glare, uncanny symmetry, extra teeth, AI sheen, oversharpened.
+```
+*為何好：**soft window key + large negative fill（3:1）** 給柔性光比，**側光在每個毛孔投 micro-shadow「證明皮膚是 3D」**；**SSS warming ear/nostril edges** 是真皮膚的光學特徵；**vellus hair + no smoothing** 直接反 AI 塑膠臉；**85mm f/1.8 near-iris focus** = editorial 肖像景深。i2v 先鎖臉防跨幀漂移。*
+
+---
+
+### 5. 時尚 runway / lookbook — 布料慣性 + 高調 editorial 光（**Seedance 2.0 pro** ⚠️版本／`@Model`·`@Look` reference 語法未實測，跨鏡鎖角色一致）
+```
+先鎖 @Model + @Look 再多鏡。
+[Shot 1 — walk] @Model walks toward camera down a concrete runway in a fluid silk-charmeuse slip dress; the bias-cut hem flows with real inertia and drape under a hard overhead key. 50mm, slight low angle, shallow DoF.
+[Shot 2 — detail pass] Cut to 100mm macro tracking the fabric: light sliding over the satin weave, seams and hand-stitching visible, the cloth rippling a half-beat behind the body.
+[Shot 3 — turn & settle] @Model pivots; the skirt blooms out with centrifugal weight then settles, back-lit rim separating the silhouette from a seamless bone-white cyclorama.
+Lighting: hard editorial key + soft fill, high-key with controlled falloff. Grade: bone-white, muted skin, one deep accent from the garment colour. Material: silk-charmeuse anisotropic sheen, natural drape and weight.
+Negative: fabric frozen stiff, cloth clipping through body, warped face across shots, identity flicker, flat lighting, cheap wrinkled texture.
+```
+*為何好：時尚片成敗在「布怎麼動」——**real inertia + rippling a half-beat behind the body + centrifugal weight** 給布料真物理；**anisotropic sheen** 精準描述絲綢反光（非一般 shiny）；**@Model 跨三鏡**鎖臉防 identity flicker；**hard key + high-key controlled falloff** = lookbook 標準光。*
+
+---
+
+### 6. 珠寶 macro — 折疊焦散火光（**Kling 3.0 i2v**；先 **Seedream 5.0** 生 hero 圖鎖火光構圖）
+```
+珠寶 t2v 易變形 → i2v 最穩，先鎖圖再動。
+Macro on a brilliant-cut diamond solitaire on brushed obsidian. A single pinpoint hard light rotates slowly overhead; inside the stone, fire and scintillation flash spectral colour while refracted caustics fold and crawl across the black surface around it. 100mm macro at an f/8 focus-stacked look, sharp specular micro-highlights on each facet edge. Camera: slow 15° orbit, the stone turning a few degrees so the caustic pattern shifts and re-folds.
+Grade: neutral-cool, black background, silver-white speculars, a whisper of prismatic colour. Material: high-dispersion diamond, sharp facet edges, no bloom haze.
+Negative: soft blurry facets, plastic glassy blob, rainbow smear, milky black, floating sparkle overlay, warped ring band.
+```
+*為何好：**pinpoint hard light + slow rotation** 讓 folded caustics 隨轉動「重新折疊」= 鑽石廣告最高階的活光（死光的鑽石=玻璃球）；**fire and scintillation + facet-edge micro-highlights** 命中鑽石火光物理；**f/8 focus-stacked look** 讓整顆清晰（macro 珠寶鐵則）；i2v 鎖形防戒台變形。*
+
+---
+
+### 7. 飲料 splash — 凍結物理 coronet（**Kling 3.0** 液體物理較穩；原生音改掛 **Veo 3.1** ⚠️「O1／CoT」未證實）
+```
+Extreme high-speed macro of a single droplet striking the surface of a chilled sparkling beverage in a frosted glass. The impact throws a textbook Worthington crown — a coronet of liquid with satellite droplets pinching off the rim, frozen mid-air by an ultra-short strobe. Surface tension holds each bead as a taut sphere; rising CO2 bubbles cling to the frosted glass. Rim lighting outlines the splash against a deep teal-to-black gradient; a hard back-key makes the liquid glow.
+100mm macro, ~1/8000 motion freeze (⚠️ 數值未實測), amber-gold liquid, cool cyan rim, heavy condensation on glass. Material: real fluid dynamics, no jelly, taut surface tension.
+Negative: mushy blobby splash, water turning to CGI jelly, motion smear, gravity-defying floating liquid, flat front light, plastic bubbles, banding.
+```
+*為何好：**Worthington crown / coronet + satellite droplets pinching off + surface-tension taut sphere** 是高速攝影的真物理語彙，逼模型算對液體而非糊成果凍；**ultra-short strobe（凍結）**；**rim light + hard back-key against dark** 是飲料把水花拉成 3D 的命門。⚠️ 未實測：1/8000 凍結 + 傳言的 O1 CoT 物理一致率為社群體感，OiiOii 實測為準。*
+
+---
+
+### 8. 科技產品 — 極簡 clean studio（**Runway Gen-4.5**；先 **MJ V8.1 / Flux 1.1** 生 studio hero 靜圖鎖幾何）
+```
+先鎖產品幾何靜圖再 i2v，防 AI 亂編介面/按鍵。
+A minimalist titanium-grey wireless earbud case floats and rotates once in a soft-gradient studio, seamless off-white sweep with a subtle vignette. Lighting: large overhead softbox as key + two edge grazing lights defining the machined chamfer, a clean gradient reflection rolling across the anodised surface, a single sharp specular pinstripe along the edge proving the metal. 90mm macro, T5.6, product dead-centre in generous negative space. The lid opens on a slow hinge, a soft interior glow spilling out.
+Grade: neutral cool-white, near-zero saturation, one soft blue accent in the shadow. Material: bead-blasted anodised aluminium, matte micro-texture, sharp edge highlight, zero smudge.
+Negative: fingerprints, warped geometry, wobbling logo, plastic toy sheen, clipped highlights, invented ports or buttons, mismatched floating shadow.
+```
+*為何好：**overhead softbox + two edge grazing lights** 定義 machined chamfer 稜線（科技產品高級感在「邊」）；**gradient reflection rolling + single specular pinstripe** 證明是金屬非塑膠；**bead-blasted anodised micro-texture** 反塑膠感；**product dead-centre + off-white sweep** = clean studio 極簡構圖；先靜圖鎖幾何防亂編按鍵/介面。*
+
+---
+
+> **精品級 craft 速查（跨品類通用）：** 玻璃/珠寶→`grazing hard key + refractive caustics + specular micro-highlights`；食物→`raking side key + backlit steam + surface-tension bead`；金屬/車/3C→`travelling strip light + rolling specular line + chiaroscuro no-midrange`；皮膚→`soft key + 3:1 negative fill + SSS + pore micro-shadow`；布料→`anisotropic sheen + inertia + half-beat drape`。**共同心法：側光證明立體、材質留「真的」的證據、產品全程清楚。**
