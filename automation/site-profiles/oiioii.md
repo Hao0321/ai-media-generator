@@ -1620,7 +1620,7 @@ submit 後 STAR 餘額不變。agent 等用戶 confirm 才 commit（之後才扣
 - ❌「對 prompt 還原度 9/10 — 完美！」
 - ✅「i2v 已生成。STAR 扣 210。請評判品質。」
 
-詳見 memory/[feedback_no_self_rating.md](file:///C:/Users/Hao0321/.claude/projects/D--skills/memory/feedback_no_self_rating.md)
+核心規則：只回報可觀察事實與成本，不替使用者為成品打分。
 
 
 ---

@@ -1,12 +1,18 @@
 # Seedance — ByteDance 豆包影片模型
 
-官方入口：Volcengine Ark / BytePlus ModelArk、即夢 (Jimeng)、豆包 (Doubao)、**OiiOii.ai**（聚合平台）。主力版本 **Seedance 2.0 pro**（最新）/ **Seedance 1.0 Pro** / **1.0 Lite**。Seedance 的殺手鐧是 **多鏡頭敘事 (multi-shot)** — 一個 prompt 內可指定多個鏡頭切換。
+官方入口：Volcengine Ark / BytePlus ModelArk、即夢 (Jimeng)、豆包 (Doubao)、**OiiOii.ai**（聚合平台）。截至 2026-08，BytePlus 已建立 **Seedance 2.5 official launch** 頁，但公開 ModelArk prompt guide／API 文件仍主要列 **Seedance 2.0**；因此 2.5 採 **provider capability gate**，不預設每個入口都有相同時長、解析度與素材額度。Seedance 的殺手鐧是 **多鏡頭敘事 + 多模態參考 + 音影片聯合生成**。
+
+> **2.5 與社群案例必讀：** 30 秒、多參考、UGC／Vlog、硬切、對話、I2V 或社群 prompt 拆解，讀 [seedance-2-5-community-playbook.md](seedance-2-5-community-playbook.md)。
+>
+> **垂直領域必讀：** 商業／企業、建商／建築、廣告／UGC、產品／電商、汽車、美食、電影或動畫，讀 [seedance-domain-playbook.md](seedance-domain-playbook.md)。它加入 truth boundary、剛體／流體／空間鎖與各領域 QA，避免只換主詞的 generic prompt。
+>
+> **高約束長片必讀：** 參考圖角色、首鏡建立後鎖定、多鏡一致性、時間凍結／倒轉、複雜物理或 15 秒以上故事，讀 [seedance-longform-continuity.md](seedance-longform-continuity.md)。該檔把長篇需求編譯成「不變量帳本 + 時間碼 + 事件狀態機 + 驗收契約」，並含 2.0 的 15 秒切段策略。
 
 ---
 
 ## 🆕 2026-05-18 社群證據版（推翻部分前期斷言）
 
-**Source：** [`YouMind-OpenLab/awesome-seedance-2-prompts`](https://github.com/YouMind-OpenLab/awesome-seedance-2-prompts)（CC BY 4.0，107 個 curated prompts，3,172 tracked，2026-05-18 last update）
+**Source：** [`YouMind-OpenLab/awesome-seedance-2-prompts`](https://github.com/YouMind-OpenLab/awesome-seedance-2-prompts)（CC BY 4.0；截至 2026-05-31 repository 顯示 3,552 prompts）。篇數代表覆蓋量，不代表 3,552 次獨立成功驗證；2.5 新案例與去重規則見 [seedance-2-5-community-playbook.md](seedance-2-5-community-playbook.md)。
 
 ### ⚠️ 推翻：以下 2026-04-21 斷言是錯的（Seedance 2.0 已升級）
 
@@ -124,6 +130,18 @@ without exaggeration or robotic feel.
 社群實戰 prompt 都註明創作者 X handle。雖然不影響生成品質，但**追蹤誰的 prompt 好用**是元學習。
 
 ### 📚 完整 community-validated playbook 範本
+
+#### 範本 0：高約束參考圖長片
+
+不要把整篇需求當散文堆入 prompt。先按 [seedance-longform-continuity.md](seedance-longform-continuity.md) 建立：
+
+1. `Reference Roles`：每個素材只負責一種資訊
+2. `Deferred Bindings`：首鏡可自由建立，後續轉為唯讀
+3. `Invariant Ledger`：身份、服裝、配件、道具與空間鎖
+4. `Event State Machine`：正常 → 觸發 → 特效狀態 → 例外 → 復位
+5. `Acceptance Contract`：按身份／連續性／物理／文字／結尾分類驗收
+
+Seedance 2.0 的官方單次高品質多鏡頭輸出為 15 秒；30 秒故事拆成 2–3 段，用尾幀／影片延長和 `Continuation State` 接續。
 
 #### 範本 A：3-Shot Cinematic 15s（最常見格式）
 
@@ -311,20 +329,19 @@ Cut to: low-angle shot as he pushes the boat out, sun rising behind him.
 
 ## 版本差異
 
-| 版本 | 特色 | 費用 |
+| 版本 | 已確認特色 | 使用原則 |
 |---|---|---|
-| **Seedance 1.0 Pro** | 高畫質、多鏡頭最準、運鏡最豐富 | 較貴 |
-| **Seedance 1.0 Pro-Fast** | Pro 的加速版 | 中 |
-| **Seedance 1.0 Lite** | 快、便宜、簡單場景可 | 最低 |
-| Seedance 2.0 (若已推出) | 下一代，預計運鏡與長度提升 | — |
+| **Seedance 2.0** | 四模態混合參考、複雜互動與物理、指令一致性、15 秒高品質多鏡頭音影片 | 當前官方基準；長於 15 秒就續接 |
+| **Seedance 1.5 Pro** | 原生音影片聯合生成、對白與音效同步 | 舊專案相容 |
+| **Seedance 1.0 Pro / Lite** | T2V／I2V、多鏡頭、1080p；Lite 較快 | 簡單或舊平台任務 |
+| **Seedance 2.5** | BytePlus official launch 頁可確認名稱／上線行銷；公開 API 詳細限制仍未完全同步 | 先查 provider UI/model ID；30 秒、4K、多參考與 edit 逐項 gate |
 
 ## 模式
 
-- **T2V** / **I2V**
-- **時長**：5s / 10s (Pro 支援 10s)
-- **解析度**：720p / 1080p
-- **FPS**：24
-- **Aspect**：16:9 / 9:16 / 1:1
+- **Seedance 2.0 輸入**：文字、圖片、音訊、影片，可混合參考
+- **Seedance 2.0 官方素材上限**：最多 9 張圖片、3 段影片、3 段音訊
+- **Seedance 2.0 官方輸出**：15 秒高品質多鏡頭音影片
+- **舊版常見模式**：T2V / I2V、720p / 1080p、16:9 / 9:16 / 1:1；實際選項依平台 UI
 
 ## 運鏡詞 (Seedance 支援很全)
 
@@ -396,6 +413,10 @@ Ink wash painting aesthetic, dramatic lighting, slow motion moments.
 
 ## 連結
 
+- ByteDance Seedance 2.0 官方發布：https://seed.bytedance.com/blog/seedance-2-0-official-launch
+- ByteDance Seedance 2.0 官方頁：https://seed.bytedance.com/seedance2_0
+- BytePlus Seedance 2.5 official launch：https://www.byteplus.com/en/contact-us/ai-seedance2-5-official
+- BytePlus Seedance 2.0 prompt guide：https://docs.byteplus.com/en/docs/ModelArk/2222480
 - 官方 Prompt Guide (BytePlus)：https://docs.byteplus.com/en/docs/ModelArk/1631633
 - Seedance 1.0 Lite Guide：https://docs.byteplus.com/en/docs/ModelArk/1587797
 - 民間整理 (Atlabs 2026)：https://www.atlabs.ai/blog/ultimate-seedance-1-pro-prompting-guide

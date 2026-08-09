@@ -2,6 +2,15 @@
 
 All notable changes to this skill are documented here.
 
+## [2.2.0] - 2026-08-09 — Seedance 2.5 production playbooks + Codex compatibility
+
+- Added `references/seedance-2-5-community-playbook.md`: provider-gated Seedance 2.5 patterns for 30-second stories, multi-reference control, UGC／Vlog, hard cuts and prompt decomposition.
+- Added `references/seedance-domain-playbook.md`: reusable structures for commercial, real-estate developer, advertising, product, automotive, food, film and animation work.
+- Added `references/seedance-longform-continuity.md`: first-shot locking, identity／wardrobe／prop continuity, time-freeze／reverse-time and complex-physics guidance.
+- Expanded `references/seedance.md`, community patterns, external resources and browser routing for Seedance 2.5 capability checks.
+- Added Codex-compatible `agents/openai.yaml`, reusable eval cases and Codex installation instructions.
+- Kept AI short-drama story architecture separate: route narrative work to the companion `ai-short-drama` Skill and use this Skill for media generation.
+
 ## [2.1.0] - 2026-06-11 — 提示詞升級：更強 · 更快 · 更準 · 更精美
 
 Prompt-craft elevation (2-phase workflow: produce -> adversarial-tighten, 8 agents).

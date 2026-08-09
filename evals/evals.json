@@ -1,0 +1,163 @@
+{
+  "skill_name": "ai-media-generator",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "kling-wuxia-bamboo-duel",
+      "prompt": "幫我寫一個 Kling 2.1 Master 的 prompt，我想做一段 10 秒的武俠竹林對決場景，要有電影感跟運鏡。兩個武俠高手對峙，然後出劍。請給我完整 prompt、negative、參數與繁中說明。",
+      "expected_output": "正確的 Kling 四/五段式 prompt (英文主)、合理的運鏡選擇（不超過 2 個）、negative prompt、參數建議（時長 10s、aspect、model variant）、繁中說明。應引用 references/kling.md 的公式。",
+      "assertions": [
+        {"text": "Output includes a complete English prompt with Subject + Action + Scene + Camera + Style structure"},
+        {"text": "Camera motion uses at most 2 movements (not stacked excessively)"},
+        {"text": "Includes a negative prompt section"},
+        {"text": "Specifies duration 10s, aspect ratio, and Kling variant (Master/Pro)"},
+        {"text": "Includes Traditional Chinese explanation of why each prompt part is written that way"},
+        {"text": "Mentions or demonstrates the Kling prompt formula from kling.md reference"}
+      ],
+      "files": []
+    },
+    {
+      "id": 1,
+      "eval_name": "selector-dad-kid-flower-field",
+      "prompt": "我有一張我兒子的照片，想做一個 15 秒的影片讓他在花田裡奔跑，笑得很開心。我不確定要用哪個工具。請推薦最合適的 1-2 個平台並給我可以直接用的 prompt。",
+      "expected_output": "應先做平台推薦（可能是 Kling I2V 或 Runway Gen-4 References 因角色一致性），解釋原因，然後給該平台的 I2V/Ref2V prompt + 參數。應引用 references/selector.md 的決策樹。",
+      "assertions": [
+        {"text": "Recommends 1-2 platforms with reasoning"},
+        {"text": "Addresses character consistency since input is a real child's photo"},
+        {"text": "Uses I2V or reference-to-video mode (not pure text-to-video)"},
+        {"text": "Provides ready-to-use English prompt"},
+        {"text": "Prompt focuses on action/motion, not re-describing the child's appearance (I2V best practice)"},
+        {"text": "Mentions at least one safety/consent consideration for using a child's photo"}
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "eval_name": "suno-lofi-mandarin-love-song",
+      "prompt": "幫我用 Suno v5 做一首中文 lo-fi 情歌。歌名叫《夜貓》，想要有完整的 Verse / Pre-Chorus / Chorus / Bridge / Outro 結構，副歌要有情緒爆發感但整體保持溫柔。Style 和 Lyrics 欄都要給我可直接貼的版本。",
+      "expected_output": "Style 欄 4-8 個 tag 的英文曲風描述；Lyrics 欄完整中文歌詞 + 方括號 metatags（[Verse 1] 等）；分欄清楚；有 top-anchor 技巧的示範；繁中說明為什麼每個 tag 這樣選。",
+      "assertions": [
+        {"text": "Separates Style field and Lyrics field clearly"},
+        {"text": "Style field contains 4-8 English genre/mood/instrument tags (not Chinese song style description)"},
+        {"text": "Lyrics field uses bracketed metatags [Verse 1], [Chorus], etc."},
+        {"text": "Lyrics are in Chinese (Traditional or Simplified acceptable)"},
+        {"text": "Includes full song structure: Intro, Verse 1, Pre-Chorus, Chorus, Verse 2 or Bridge, Outro"},
+        {"text": "Does not put 'Verse:' without brackets (which would be sung as lyrics)"},
+        {"text": "Includes Traditional Chinese explanation of why tags were chosen"}
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "eval_name": "seedance-reference-locked-time-reversal",
+      "prompt": "我要用 Seedance 做一支 30 秒影片：圖一是唯一主角參考；第一鏡可由 AI 決定服裝，但後續不能換。餐廳裡托盤被撞飛，時間凍結，只有主角能動，接著所有物件沿原軌跡倒轉。請整理成可生成的提示詞，確保人物、髮飾、杯子和複雜液體物理前後一致。",
+      "expected_output": "應使用 Seedance 高約束長片架構：參考圖只綁身份、首鏡 deferred binding、不變量帳本、anchor-noun registry、時間碼分鏡、凍結/倒轉事件狀態機、主角與攜帶物的例外集合、分材質物理帳本及分類驗收契約。Seedance 2.0 應將 30 秒拆成 2–3 段並附 Continuation State；若使用者指定 2.5，先核對平台能力，不把 30 秒當成已驗證官方上限。",
+      "assertions": [
+        {"text": "Treats image 1 as the sole identity/appearance source and does not re-describe the face"},
+        {"text": "Uses deferred binding: first-shot clothing may be generated once, then becomes locked across later shots"},
+        {"text": "Defines an invariant ledger and reuses exact anchor nouns for the signature accessory, glass, and straw"},
+        {"text": "Represents normal motion, collision, freeze, exception, reverse, and restoration as explicit states or equivalent causal stages"},
+        {"text": "Includes the hero's carried props and relevant hair/clothing in the normal-time exception set"},
+        {"text": "Differentiates the physical behavior of thin liquid, viscous sauce, rigid tableware, and solid food"},
+        {"text": "For verified Seedance 2.0, splits the 30-second story into 15-second-or-shorter continuations with a handoff state"},
+        {"text": "Does not claim unverified Seedance 2.5 duration or input limits as official facts"},
+        {"text": "Groups negative constraints by identity, continuity, physics, typography, camera, and ending rather than one undifferentiated list"}
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "eval_name": "seedance-25-observational-ugc-vlog",
+      "prompt": "我想用平台標示的 Seedance 2.5 做一支 30 秒直式咖啡 Vlog。主角參考圖只有一張，要像朋友隨手用 MiniDV 拍的，不要精品廣告感。從放下攝影機、磨豆、沖煮、喝一口到最後用手蓋住鏡頭，全程只要現場聲，不要配樂。幫我寫可直接用的 prompt。",
+      "expected_output": "先做 provider capability gate，不把 30 秒或 2.5 標籤視為跨平台保證。輸出 observational UGC Production Brief：身份與服裝鎖、start-in-motion、MiniDV 的 autofocus settling／exposure breathing／reframing／camera reaction lag、時間碼事件、raw production sound ledger、hard-cut transition contract、結尾蓋鏡與防止 reference sheet／角色複製的驗收條件。",
+      "assertions": [
+        {"text": "Checks or explicitly conditions the 30-second plan on the provider's visible Seedance 2.5 capabilities"},
+        {"text": "Uses the reference image for identity without unnecessarily re-describing the subject's face"},
+        {"text": "Starts with an action already in progress rather than a static character-introduction pose"},
+        {"text": "Specifies realistic camera-operator behavior such as reaction lag, imperfect reframing, autofocus settling, or exposure breathing"},
+        {"text": "Uses time-coded beats with one dominant state change and a completed end state per beat"},
+        {"text": "Defines raw production sounds tied to visible events and explicitly excludes background music"},
+        {"text": "Uses one non-contradictory transition contract and defines the final lens-cover ending"},
+        {"text": "Excludes reference-sheet framing, subject duplication, captions, logos, and watermarks"}
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "eval_name": "seedance-25-multireference-dialogue-control",
+      "prompt": "我要用 Seedance 做一段兩人對話。圖一是 A、圖二是 B，音訊一是 A 的聲音、音訊二是 B 的聲音。兩人先同框，再各自反打講一句，最後回到雙人鏡。臉、服裝、聲線不能交換，也不要字幕。請用最穩的格式寫。",
+      "expected_output": "輸出 reference job cards 和 conflict precedence，分別綁定兩人的 identity/outfit 與 voice；建立左右位置、視線與空間鎖；以 two-shot、over-shoulder、reverse、final two-shot 的時間碼安排 dialogue owner、exact line、delivery、pause、listening reaction 與 lip-sync；附 audio ledger、end state 與 speaker-swap／duplicate／captions exclusions。若平台版本或素材槽位未確認，先通過 capability gate。",
+      "assertions": [
+        {"text": "Creates explicit job cards for each image and audio reference instead of saying to use all references generally"},
+        {"text": "Defines conflict precedence and keeps each character's identity, outfit, and voice bound to the correct source"},
+        {"text": "Locks screen position, eyelines, and room geography across two-shot and reverse shots"},
+        {"text": "Assigns each exact line to one dialogue owner with delivery, pause, and lip-sync instructions"},
+        {"text": "Includes silent listening reactions so both characters do not speak or move independently at once"},
+        {"text": "Defines a clear final two-shot end state"},
+        {"text": "Excludes speaker swap, face drift, duplicate characters, captions, and extra dialogue"},
+        {"text": "Does not assume provider-specific duration or reference limits without checking the visible model capabilities"}
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "eval_name": "seedance-builder-floorplan-walkthrough",
+      "prompt": "用 Seedance 2.5 幫建商做一支樣品屋影片。我有平面圖、白模、材質 moodboard，想一鏡從玄關走到主臥，畫面要高級，還要加不存在的海景讓案子更好賣。",
+      "expected_output": "拒絕把不存在的海景包裝成真實建案，區分 concept visualization 與 actual-property marketing。先做 capability gate，將平面圖、白模、材質與 camera route 分別綁定；鎖牆、門窗、房間鄰接、尺度與單一採光方向；定義人眼高度、可行走動線、不可穿牆與最後示意標示 safe zone。",
+      "assertions": [
+        {"text": "Separates concept visualization from actual-property marketing and does not invent an unapproved ocean view"},
+        {"text": "Assigns separate reference jobs to the floor plan, white model, material board, and optional camera route"},
+        {"text": "Locks walls, doors, windows, room adjacency, scale, and one consistent lighting direction"},
+        {"text": "Defines a physically walkable route at human eye height with no wall penetration or impossible indoor drone move"},
+        {"text": "Leaves a clean safe zone for an editor-added concept disclaimer instead of generating legal text"},
+        {"text": "Conditions 30-second, 4K, reference limits, and editing features on the visible provider capability"}
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "eval_name": "seedance-automotive-geometry-and-physics",
+      "prompt": "我有一張電動車產品照，要做 15 秒雨夜汽車廣告：車燈亮起、側面高速跟拍、輪圈特寫，最後停成 hero shot。車型、輪圈和 Logo 都不能變。",
+      "expected_output": "走 I2V，產品照只負責車身 master，prompt 主要描述動態。建立車身、軸距、四輪、燈組、玻璃、徽標與車牌區的幾何鎖；時間碼分配車燈、lateral tracking、輪圈 insert 與 clean hold；寫輪胎接地、輪速、懸吊、反射與雨水物理，排除多輪、熔車、滑行與錯字 Logo。",
+      "assertions": [
+        {"text": "Uses image-to-video and treats the product photo as the exact vehicle geometry master"},
+        {"text": "Locks body proportions, wheelbase, four-wheel count, wheel design, lamps, glasshouse, badges, and plate area"},
+        {"text": "Uses distinct time blocks for lamp wake-up, lateral tracking, wheel insert, and final hero hold"},
+        {"text": "Defines tire contact, wheel rotation, suspension response, reflections, and rain spray as physical behavior"},
+        {"text": "Excludes extra wheels, changing badges, melted panels, floating tires, and sliding without wheel rotation"},
+        {"text": "Keeps exact Logo/text from the reference or schedules it for post rather than trusting generated typography"}
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "eval_name": "seedance-food-material-ledger",
+      "prompt": "幫餐廳做一支 15 秒豬排咖哩 Reels：切開酥脆豬排、冒熱氣、淋咖哩、叉子拉起一口，最後要有完整擺盤。不要看起來像塑膠食物。",
+      "expected_output": "用 9:16 macro hard-cut 結構與 plating reference lock，分時段安排切開、蒸氣、單次醬汁淋下、叉子抬起與 hero plate。建立外皮、肉、咖哩、蒸氣、瓷盤不同物理；鎖食材數量與盤面，避免無限拉絲、錯誤蒸氣、刀叉穿透、塑膠表面和額外手指。",
+      "assertions": [
+        {"text": "Locks the exact plating, ingredient count, plate geometry, and final hero composition"},
+        {"text": "Uses one dominant food action per time block and ends every block in a completed state"},
+        {"text": "Differentiates crust, meat fibers, viscous curry, steam, ceramic, and utensil physics"},
+        {"text": "Uses appetizing but physically motivated side lighting and avoids neon oversaturation or plastic surfaces"},
+        {"text": "Ties knife crack, sizzle, sauce contact, and room tone to visible events"},
+        {"text": "Excludes duplicated garnish, impossible steam, endless stretch, utensil penetration, extra fingers, generated menu text, and fade"}
+      ],
+      "files": []
+    },
+    {
+      "id": 9,
+      "eval_name": "seedance-domain-routing-and-truth-lock",
+      "prompt": "我要做 Seedance 影片，題材可能是企業形象、產品廣告、電影概念或原創動畫。請告訴我這四種不能共用哪些寫法，並各給一個最小可用 prompt 骨架。",
+      "expected_output": "依 seedance-domain-playbook 分流：企業片鎖真流程與聲明，產品片鎖 packshot 幾何並走 I2V，電影片鎖 dramatic state 與角色表演，動畫片鎖 silhouette／比例／palette／材質／timing。四者共用 capability gate、reference jobs、單一主事件、audio owner 與 clean hold，但不能只換主詞使用同一 generic cinematic prompt。",
+      "assertions": [
+        {"text": "Explains that corporate, product, film, and animation prompts require different truth, geometry, story, and style invariants"},
+        {"text": "Corporate skeleton forbids invented clients, metrics, certifications, UI, and process claims"},
+        {"text": "Product skeleton prioritizes an exact packshot master, motion-only I2V direction, and a final clean hold"},
+        {"text": "Film skeleton includes state before, observable event, state after, performance, dialogue ownership, and continuity"},
+        {"text": "Animation skeleton locks silhouette, scale, proportions, palette, line or material system, and timing signature"},
+        {"text": "All skeletons retain provider capability gating and do not claim announced Seedance 2.5 features are universally executable"}
+      ],
+      "files": []
+    }
+  ]
+}

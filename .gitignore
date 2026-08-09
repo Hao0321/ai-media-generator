@@ -1,5 +1,6 @@
 # Local skill workspace and evals
-evals/
+evals/*
+!evals/evals.json
 *-workspace/
 iteration-*/
 

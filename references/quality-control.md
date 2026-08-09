@@ -330,7 +330,7 @@ distorted product shape
 ---
 
 ## 連動修正（對症查閱）
-- **多輪記憶 & 對話式編輯** → [reference-locked-prompting.md](reference-locked-prompting.md)（待寫，暫列）
+- **多輪記憶 & 對話式編輯** → `reference-locked-prompting.md`（待寫，暫列；目前沒有獨立 reference）
 - **首尾幀精控 & Motion Brush** → [camera-language.md](camera-language.md)
 - **OiiOii Skill-庫使用指南** → [oiioii.md](oiioii.md) § Skill-庫 Agent  
 - **產品 i2v 鎖形狀完整流程** → [image-to-video-workflow.md](image-to-video-workflow.md)
