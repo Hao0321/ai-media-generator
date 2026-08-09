@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Media Generator"
+  short_description: "選擇 AI 媒體平台並製作商業、影像與音樂的高品質生成提示詞"
+  default_prompt: "Use $ai-media-generator to choose the right model and craft a provider-gated, production-ready prompt for my media project."

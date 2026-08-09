@@ -1,6 +1,6 @@
 # Community-Validated Prompt Patterns (研究證據版)
 
-**Source:** 2026-04-21 三 agent 平行研究（X/Threads/Reddit/小紅書/Bilibili/官方 cookbook + fal.ai / Google Cloud / OpenAI Cookbook 等）
+**Source:** 2026-04-21 跨平台研究 + 2026-08-09 Seedance 2.5 官方／Reddit／GitHub／X 索引／Bilibili／抖音／知乎／TikTok 更新
 **用法：** 任何時候生 prompt 前先查這檔找目標模型的**簽名 token + 長度甜蜜點 + 禁忌**。
 
 ---
@@ -21,9 +21,14 @@
 
 ## 🎥 影片模型 per-model 簽名
 
-### Seedance 2.0 pro / 1.5（2026-05-18 大更新 — 107 prompts 證據）
+### Seedance 2.0 / 2.5（2026-08-09 更新）
 
-> **Source：** [YouMind-OpenLab/awesome-seedance-2-prompts](https://github.com/YouMind-OpenLab/awesome-seedance-2-prompts) (CC BY 4.0, 6 Featured + 101 curated)
+> **完整證據、去重、Capability Gate、六類模板與來源表：** [seedance-2-5-community-playbook.md](seedance-2-5-community-playbook.md)。YouMind repository 截至 2026-05-31 顯示 3,552 prompts；AtlasCloud repository 截至 2026-08-08 顯示 150 prompts／50 previews。篇數不是成功率，鏡像不重複計票。
+
+- **2.5 版本規則：** 官方 launch 頁可確認名稱／上線行銷；30 秒、4K、多參考與 edit 必須依 provider UI/model ID 逐項 gate。
+- **Control vs Exploration：** 不需精準控制可用 1–3 句短 prompt；角色鎖、商品、對白、教學、複雜事件才用完整 Production Brief。
+- **社群新模式：** reference job cards、performance signatures、start-in-motion、camera-operator lag、optical imperfections、transition contract、lighting arc、audio event ledger、end-state contract。
+- **修正「ONE verb」：** 每個 time block 一個主狀態變化；支撐同一事件的微動作可保留，不是字面上只能出現一個動詞。
 
 - **結構（首選 — 多鏡頭）：** Bracketed labels
   ```

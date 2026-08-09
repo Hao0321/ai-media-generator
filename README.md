@@ -1,22 +1,22 @@
 # ai-media-generator
 
-> **零門檻做出專業 AI 影片 / 圖片 / 音樂 — 因為 Claude 幫你套上「資深導演級」提示詞。**
+> **零門檻做出專業 AI 影片 / 圖片 / 音樂 — 讓 Codex 或 Claude Code 幫你套上「資深導演級」提示詞。**
 >
 > Zero-skill cinema. Senior-director prompts on autopilot.
 
-說「做個古代將軍騎馬衝鋒的電影感短片」就好。Claude 會：
+說「做個古代將軍騎馬衝鋒的電影感短片」就好。Agent 會：
 
 1. **挑對平台** —— Seedance 寫實武打？Veo 3.1 要原生音效？Kling 3.0 / Runway Gen-4.5 要寫實運鏡？這個 skill 知道（Sora 2 🔴 已停運，見下）
 2. **寫對提示詞** —— 不是 `cinematic, 8k, beautiful` 這種沒用的詞，而是 Deakins、Lubezki、Kodak Vision3 500T、teal-orange grade、Constraints tail（不抖動、不變形…）這類「平台真正吃」的 token
 3. **直接操作網站** —— 透過瀏覽器 MCP 把提示詞送上 OiiOii / Flow / Kling / Suno，按完所有按鈕，把成品 fetch 回來
 
-涵蓋 14+ 平台：Midjourney V8.1、Flux 1.1 Pro、Sora 2（🔴 已停運）、Veo 3.1、Kling 3.0、Seedance 2.0 pro、Suno v5.5、Runway Gen-4.5、Ideogram 3、Seedream 5.0、Nano Banana Pro、Vidu Q3、Stable Diffusion、OiiOii…
+涵蓋 14+ 平台：Midjourney V8.1、Flux 1.1 Pro、Sora 2（🔴 已停運）、Veo 3.1、Kling 3.0、Seedance 2.0／2.5（依 provider 能力閘）、Suno v5.5、Runway Gen-4.5、Ideogram 3、Seedream 5.0、Nano Banana Pro、Vidu Q3、Stable Diffusion、OiiOii…
 
 ---
 
-**A Claude Code Skill for zero-skill, senior-quality AI media generation across 14+ platforms.**
+**A Codex and Claude Code Skill for zero-skill, senior-quality AI media generation across 14+ platforms.**
 
-You say "make a cinematic shot of an ancient general charging on horseback." Claude handles the rest — picking the right platform, writing the platform-specific signature prompt (no more `beautiful, masterpiece, detailed` filler — actual director / DP / film-stock / lens / Constraints-tail vocabulary, calibrated to what the target model actually parses), and driving the browser to submit it.
+You say "make a cinematic shot of an ancient general charging on horseback." The agent handles the rest — picking the right platform, writing the platform-specific signature prompt (no more `beautiful, masterpiece, detailed` filler — actual director / DP / film-stock / lens / Constraints-tail vocabulary, calibrated to what the target model actually parses), and driving the browser to submit it.
 
 ## 為什麼需要這個 skill？
 
@@ -52,7 +52,14 @@ Generative-AI prompts are **not portable**. The same idea sent to Flux vs Midjou
 - **Sora 2** wants "format anchors" (`bodycam footage`, `surveillance`) and quoted dialogue — 🔴 app/web 已於 2026-04-26 停運（API 撐到 2026-09-24），新任務改用 Runway Gen-4.5 / Veo 3.1 / Kling 3.0
 - **Veo 3.1** is the only model where SFX / Ambient tags actually generate audio
 
-This skill captures those signatures — both from official cookbooks (OpenAI, Google Cloud, fal.ai, BFL) and from real-world community posts on X / Threads / Reddit / 小紅書 / Bilibili — into a single reference Claude can load on demand.
+This skill captures those signatures — both from official cookbooks (OpenAI, Google Cloud, fal.ai, BFL) and from real-world community posts on X / Threads / Reddit / 小紅書 / Bilibili — into references an agent can load on demand.
+
+## v2.2 highlights
+
+- Seedance 2.5 community prompt patterns with provider capability gates.
+- 30-second continuity, first-shot locking, multi-reference, time-freeze／reverse-time and complex-physics workflows.
+- Domain playbooks for commercial, real estate, advertising, products, automotive, food, film and animation.
+- Codex UI metadata and reusable evaluation cases.
 
 ## What's inside
 
@@ -61,6 +68,9 @@ ai-media-generator/
 ├── SKILL.md                      # Top-level skill (auto-pilot + hard rules)
 ├── references/                   # Platform-specific prompt guides (14 platforms)
 │   ├── community-prompt-patterns.md   # ⭐ cross-platform meta + per-model signatures
+│   ├── seedance-2-5-community-playbook.md # community patterns + 30s / multi-ref / UGC
+│   ├── seedance-domain-playbook.md         # commercial / real estate / auto / food / film / animation
+│   ├── seedance-longform-continuity.md     # identity locks / reverse time / complex physics
 │   ├── cinematic-direction.md         # advanced director / DP / film-stock vocabulary
 │   ├── commercial-direction.md
 │   ├── vfx-effects.md
@@ -121,22 +131,25 @@ When a user says "make me a 15-second cinematic ad of X" the skill:
 
 ## Installation
 
-Drop the folder into your Claude Code skills directory:
+Clone the folder into the skills directory used by your agent:
 
 ```bash
-# Per-user
-git clone https://github.com/<your-org>/ai-media-generator.git ~/.claude/skills/ai-media-generator
+# Codex, per-user
+git clone https://github.com/Hao0321/ai-media-generator.git ~/.codex/skills/ai-media-generator
 
-# Or project-level
-git clone https://github.com/<your-org>/ai-media-generator.git ./.claude/skills/ai-media-generator
+# Claude Code, per-user
+git clone https://github.com/Hao0321/ai-media-generator.git ~/.claude/skills/ai-media-generator
+
+# Claude Code, project-level
+git clone https://github.com/Hao0321/ai-media-generator.git ./.claude/skills/ai-media-generator
 ```
 
-Claude Code auto-discovers `SKILL.md` files inside skills directories.
+Codex and Claude Code discover `SKILL.md` files inside their configured skills directories.
 
 ## Requirements
 
-- **Claude Code** (CLI) or any client that supports the Skills format.
-- For browser automation: the `claude-in-chrome` MCP server (extension) connected.
+- **Codex**, **Claude Code**, or another client that supports the Skills format.
+- For browser automation: a compatible browser-control tool or MCP server connected.
 - For specific platforms you want to drive: a logged-in account on that platform in the same browser session.
 
 ## Verified platforms (browser automation)

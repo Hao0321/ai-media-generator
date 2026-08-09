@@ -418,7 +418,7 @@ oversaturated, photorealistic, 3D render, modern clothing, urban city
 - ❌ 在執行時停下問「確定嗎？」— Stage 6 確認過就不要再問
 - ❌ 幫使用者付款 — 永遠不代付
 - ❌ 輸出沒套 skill 語彙庫的 prompt
-- ❌ **預設 show Preview** — 2026-04-20 後 user 永久要求**直接執行不確認**，Stage 6 預設跳過。只在 (1) 付費牆 (2) 登入需密碼 (3) 不可逆刪除 (4) user 主動說「先確認」才停。詳見 [feedback_no_confirmation.md](file:///C:/Users/Hao0321/.claude/projects/D--skills/memory/feedback_no_confirmation.md)
+- ❌ **重複要求確認** — 使用者已明確授權執行且沒有新增成本或不可逆後果時，不要在每個子步驟重問。遇到付費牆、登入憑證、不可逆刪除、能力／合規不確定，或使用者主動要求 preview 時才停。
 - ❌ **chain workflow 中間 screenshot/TodoWrite** — 多任務只首尾 screenshot 各 1 張，TodoWrite 跑完一次性更新。詳見 [token-efficient-mode.md §策略 8](token-efficient-mode.md)
 
 ### Chain Workflow 模式 (做 N 首歌、N 張圖)

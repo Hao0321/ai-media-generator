@@ -9,10 +9,10 @@
 
 | 工具 | 用途 |
 |---|---|
-| **Claude in Chrome** (`mcp__Claude_in_Chrome__*`) | 操作使用者真實的瀏覽器 (已登入狀態)，最自然 |
+| **Chrome control skill** (`chrome:control-chrome`) | 操作使用者真實的瀏覽器（保留已登入狀態），最自然 |
 | **Claude Preview** (`mcp__Claude_Preview__*`) | 開一個新的沙箱瀏覽器，有自己的憑證時用 |
 
-多數情境選 Claude in Chrome，因為 AI 生成平台都需要登入 + 付費會員狀態。
+多數情境選 Codex 的 `chrome:control-chrome`，因為 AI 生成平台都需要登入 + 付費會員狀態。
 
 ## 5 大不可越界的安全規則
 
@@ -141,18 +141,18 @@
 4. 設 model (Q2 / Q3) / aspect / duration
 5. Generate → 等待 → 下載
 
-## 與 Claude in Chrome 整合的範本
+## 與 Codex Chrome control 整合的範本
 
 ```
 使用者：幫我在 Kling 上產生這個 prompt 的影片：[prompt]
 
-Claude：
+Codex：
 1. 先讀 references/kling.md 確認 prompt 格式正確
 2. 向使用者確認最終 prompt + 參數
-3. 用 mcp__Claude_in_Chrome__navigate 到 Kling
-4. mcp__Claude_in_Chrome__get_page_text 或 screenshot 確認已登入
+3. 依 `chrome:control-chrome` skill 導航到 Kling
+4. 讀取頁面文字或 screenshot 確認已登入
 5. 若未登入 → 告訴使用者去登入 → 等待
-6. 找到 prompt textarea → mcp__Claude_in_Chrome__form_input
+6. 找到 prompt textarea → 用 Chrome 控制工具輸入
 7. 設參數 → 送出
 8. 定期 screenshot 追蹤狀態
 9. 生成完 → 找下載按鈕 → 點擊

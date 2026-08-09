@@ -8,12 +8,14 @@
 
 ## 🎬 影片模型 prompt repositories
 
-### ⭐ Seedance 2.0
+### ⭐ Seedance 2.0 / 2.5
 - **Repo：** [`YouMind-OpenLab/awesome-seedance-2-prompts`](https://github.com/YouMind-OpenLab/awesome-seedance-2-prompts)
 - **Stars：** 高（active）  **License：** CC BY 4.0
-- **內容：** 6 hand-picked Featured + 101 curated（共 107，3,172 tracked）
+- **內容：** 截至 2026-05-31 repository 顯示 3,552 prompts；數量代表覆蓋量，不等於獨立成功驗證
 - **強項：** Bracketed labels 結構、3-shot multi-camera、Audio Profile 4-modal
-- **已整合：** [seedance.md §2026-05-18](seedance.md) + [preset-packs.md S1-S10](../templates/preset-packs.md)
+- **Repo 2：** [`AtlasCloudAI/awesome-seedance-2.5-prompts-skills`](https://github.com/AtlasCloudAI/awesome-seedance-2.5-prompts-skills)（截至 2026-08-08：150 prompts、33 categories、50 previews；provider-aware，2.5 不可用時以 2.0 執行）
+- **強項 2：** prompt provenance、預覽、reference binding、one-take、hard cuts、video delta edit、UGC／對話／教學分類
+- **已整合：** [seedance.md](seedance.md) + [seedance-2-5-community-playbook.md](seedance-2-5-community-playbook.md) + [preset-packs.md S1-S10](../templates/preset-packs.md)
 
 ### ⭐ Veo 3.1
 - **Repo：** [`liu-kaining/Awesome-Veo3-Prompts`](https://github.com/liu-kaining/Awesome-Veo3-Prompts)
@@ -86,6 +88,7 @@
 # 1. Clone / pull 主要 repos
 cd /tmp/prompt-research
 for repo in YouMind-OpenLab/awesome-seedance-2-prompts \
+            AtlasCloudAI/awesome-seedance-2.5-prompts-skills \
             liu-kaining/Awesome-Veo3-Prompts \
             xjpp22/awesome--sora-prompts \
             Pixmind-io/awesome-midjourney-v7-example-prompts \
@@ -163,6 +166,7 @@ gh search repos "awesome <model> prompts" --limit 5 \
 | 2026-04-10 | Runway Gen-4.5 | Runway | 運鏡精度 + 真人表演穩定度升級 | Runway Gen-4 / Pika | 電影 VFX、人物動作、真人拍攝感 |
 | 2026-04-22 | Hailuo 2.3 Pro | MiniMax 海螺 | **角色表演 + 微表情 + 變形特效 + 最電影感** | Hailuo 2.2 / Kling | 人像情緒戲、武打動作、特效化妝變形 |
 | 2026-05-10 | Seedance 2.0 Pro | 字節跳動 | **多鏡敘事 + 有機運動（髮/布/水）+ OiiOii 預設首選** | Seedance 1.5 / Veo 2 | 大多數影片任務、時尚美妝、生活敘事 |
+| 2026-07/08 | Seedance 2.5（provider-gated） | 字節跳動 / BytePlus | 官方 launch 頁已出現；社群展示長敘事、多參考與局部編輯，但公開 API 細節仍依入口 | Seedance 2.0 | UI 顯示實際 model ID、duration、references、resolution、edit controls 後才選；否則沿用 2.0 路由 |
 | 2026-05-18 | Oii Image 2 | OiiOii（代理 / 聚合層） | i2v 首幀鎖定 + 產品形狀 100% 保留 | GPT-Image2 / Nano Banana | **產品廣告必選路徑**：先生 hero → i2v 鎖形狀 |
 | 2026-06-01 | Oii X Imagine 🆕 | OiiOii | **概念圖轉完整短片** + 多模態參考整合 | Oii 多步 workflow | 一圖一鏡、概念藝術到影片 |
 | 2026-06-08 | OiiOii 平台大改版 | OiiOii | UI 重設計 + Gemini Omni 原生集成 + Sora 2 清除 | 舊 OiiOii 工作區 | **登上 OiiOii 必更新**，見 oiioii.md 新介面 |

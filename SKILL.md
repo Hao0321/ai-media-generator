@@ -1,11 +1,15 @@
 ---
 name: ai-media-generator
-description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提示詞，並在需要時透過瀏覽器自動化實際送到目標平台。涵蓋 OiiOii、Kling 3.0/O-series、Seedance 2.0 pro、Suno v5.5、Seedream 5.0/4.0、Vidu Q3、Midjourney V8.1、Flux 1.1 Pro / Kontext、Runway Gen-4.5 / Aleph、Google Veo 3.1、Ideogram 3、Nano Banana Pro、Stable Diffusion 3.5（⚠️ OpenAI Sora 2 已於 2026-04-26 停運，API 撐到 2026-09-24，預設改推 Runway/Veo/Kling）。只要使用者提到「AI 生圖」「AI 影片」「AI 音樂」「做 MV」「做 storyboard」「寫 prompt 給 XXX」「我想用 Kling/Suno/Midjourney/Runway/Veo...」「幫我操作 OiiOii / 即夢 / 可靈」「txt2img / img2video / 文生圖 / 文生影片 / 圖生影片」「角色一致性」「多鏡頭分鏡」「運鏡」「結果有瑕疵 / 不夠精緻 / 怎麼修」，或任何跟上述平台或影像/影片/音樂生成工作流相關的任務，都要用這個 skill。即使他們沒講明平台，只要任務是要餵給某個生成模型的 prompt，就用這個 skill 幫他們選對的平台、寫對的格式。
+description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提示詞，並在需要時透過瀏覽器自動化實際送到目標平台。涵蓋 OiiOii、Kling 3.0/O-series、Seedance 2.0/2.5、Suno v5.5、Seedream 5.0/4.0、Vidu Q3、Midjourney V8.1、Flux 1.1 Pro / Kontext、Runway Gen-4.5 / Aleph、Google Veo 3.1、Ideogram 3、Nano Banana Pro、Stable Diffusion 3.5（⚠️ OpenAI Sora 2 已於 2026-04-26 停運，API 撐到 2026-09-24，預設改推 Runway/Veo/Kling）。只要使用者提到「AI 生圖」「AI 影片」「AI 音樂」「做 MV」「做 storyboard」「寫 prompt 給 XXX」「我想用 Kling/Suno/Midjourney/Runway/Veo...」「幫我操作 OiiOii / 即夢 / 可靈」「txt2img / img2video / 文生圖 / 文生影片 / 圖生影片」「角色一致性」「多鏡頭分鏡」「運鏡」「結果有瑕疵 / 不夠精緻 / 怎麼修」，或任何跟上述平台或影像/影片/音樂生成工作流相關的任務，都要用這個 skill。即使他們沒講明平台，只要任務是要餵給某個生成模型的 prompt，就用這個 skill 幫他們選對的平台、寫對的格式。
 ---
 
 # AI Media Generator
 
+> **Codex compatibility:** References that still say “Claude in Chrome” or “Chrome MCP” describe legacy browser behavior. On Codex, load `chrome:control-chrome` and use the currently available Chrome tools; never invent or call legacy `mcp__Claude_in_Chrome__*`, `javascript_tool`, or `browser_batch` names.
+
 幫使用者把想法變成高品質的 AI 生成內容 (圖片、影片、音樂)，核心工作是 **寫對每個平台的 prompt** 以及 **必要時自動操作網站**。
+
+**AI 短劇邊界：** 使用者要做 AI 短劇／漫劇、重生／系統／逆襲／隱藏大佬、分集連載或整季架構時，先由 [`ai-short-drama`](https://github.com/Hao0321/ai-short-drama) 建題材、Bible、pilot、分集狀態與 production pack；本 Skill 只接下游角色圖、場景圖、逐鏡影片／聲音 prompt 與模型執行，不自行重寫季弧。
 
 ## 🤖 Auto-Pilot Mode (超傻瓜一句話到成品)
 
@@ -43,12 +47,16 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 | 使用者說… | 讀這個檔 | 為什麼 |
 |---|---|---|
+| 「AI短劇/AI漫劇/爽劇/重生/系統/逆襲/隱藏大佬/分集連載」 | [`ai-short-drama`](https://github.com/Hao0321/ai-short-drama) | 先鎖故事、角色、揭露梯與 state；媒體 prompt 再回本 Skill |
 | 「結果有瑕疵/爛掉/不夠精緻/閃爍/變形/塑膠感/文字怪」 | [quality-control.md](references/quality-control.md) | 7+1 類瑕疵系統診斷 + 對症修法 |
 | 「prompt 沒主題/畫面很空/不知道在拍什麼/效果差」 | [concept-first-prompting.md](references/concept-first-prompting.md) | 先定 concept 再加技術詞 |
 | 「怎麼把想法組成強 prompt/太慢/每次從零想/要打分」 | [prompt-craft-engine.md](references/prompt-craft-engine.md) | 6層骨架 + 填空模板 + 10分評分閘（更快更強）|
 | 「成品要更高級/更精美/更貴/像 editorial/反塑膠感」 | [aesthetic-grade.md](references/aesthetic-grade.md) | 打光比/調色/材質/鏡頭 DP 級配方（更精美）|
 | 「不知道用哪個模型/該用哪個平台/不熟各家」 | [model-picker.md](references/model-picker.md) | 決策樹 + 各家最強情境 |
 | 「角色要一致/同一個人出現多鏡/風格鎖定」 | [asset-library.md](templates/asset-library.md) + [multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) | 角色卡 + @element 身份鎖 |
+| 「Seedance 2.5/30秒/社群案例/UGC/Vlog/多參考/硬切/提示詞案例」 | [seedance-2-5-community-playbook.md](references/seedance-2-5-community-playbook.md) + [seedance.md](references/seedance.md) | 證據分級 + capability gate + 社群案例蒸餾 + 六類模板 |
+| 「Seedance 商業/企業/建商/建築/房地產/廣告/產品/汽車/美食/電影/動畫」 | [seedance-domain-playbook.md](references/seedance-domain-playbook.md) + [seedance.md](references/seedance.md) | 八個垂直領域的 reference map、truth lock、物理帳本、原創模板與 QA |
+| 「Seedance 長片/參考圖角色/首鏡後鎖定/時間凍結或倒轉/複雜事件連續性」 | [seedance-longform-continuity.md](references/seedance-longform-continuity.md) + [seedance.md](references/seedance.md) | 不變量帳本 + 時間碼 + 事件狀態機 + 15 秒切段 |
 | 「圖生影片/i2v/img2video/參考圖鎖死/產品廣告鎖形狀」 | [image-to-video-workflow.md](references/image-to-video-workflow.md) | i2v 鎖形狀 SOP（產品廣告最穩） |
 | 「寫歌/純音樂」→[suno.md](references/suno.md)｜「對白/音效/配樂/原生音訊」→[sound-design.md](references/sound-design.md) | 二選一 | 純音樂 vs 影片內音訊分流 |
 | 「做 MV/卡點/轉場/剪接節奏」 | [music-video.md](templates/music-video.md) + [editing-transitions.md](references/editing-transitions.md) | BPM 同步 + match cut/J-cut |
@@ -160,7 +168,7 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 **影片 (Video)**
 - Kling 3.0 / O-series（V3 畫質 / Omni 參考驅動 / O1 首尾幀，三者不同）→ [references/kling.md](references/kling.md)
-- Seedance 2.0 pro / 1.0 Pro / Lite（OiiOii 影片旗艦，`@AssetName` 標記）→ [references/seedance.md](references/seedance.md)
+- Seedance 2.0 / 2.5 / 1.x（`@AssetName` 標記；2.5 先做 provider capability gate）→ [references/seedance.md](references/seedance.md)。**2.5 社群案例、30 秒、多參考、UGC／Vlog、硬切或 prompt 拆解**另讀 [references/seedance-2-5-community-playbook.md](references/seedance-2-5-community-playbook.md)；**商業、建商、廣告、產品、汽車、美食、電影或動畫**另讀 [references/seedance-domain-playbook.md](references/seedance-domain-playbook.md)；**參考圖角色、首鏡後鎖定、時間凍結／倒轉、複雜物理或 15 秒以上故事**另讀 [references/seedance-longform-continuity.md](references/seedance-longform-continuity.md)
 - Vidu Q3 Mix/Ref/Pro（動漫 + 多角色一致，`@tag` 多參 + HEX 鎖色）→ [references/vidu.md](references/vidu.md)
 - Runway Gen-4.5 / Aleph / Act-Two → [references/runway.md](references/runway.md)
 - Google **Veo 3.1** → [references/veo.md](references/veo.md)｜🆕 **Gemini Omni**（對話式多模態、多輪編輯、any-to-any）→ [references/gemini-omni.md](references/gemini-omni.md)（Google 雙旗艦：4K 畫質線 + 對話編輯線）
@@ -303,7 +311,7 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 ## 版本資訊
 
-**平台知識最後校準：2026-06（OiiOii 大改版實機重測 + 多模型 cheatsheet + 全面 audit 優化）。** 各 reference 檔末尾有官方文件連結 — **若要執行會花錢/產生後果的操作前，優先拿 reference 連結當最終依據**，因為版本/定價變動快。
+**平台知識最後校準：2026-08（Seedance 2.5 社群案例、長敘事一致性與跨產業應用擴充）。** 各 reference 檔末尾有官方文件連結 — **若要執行會花錢/產生後果的操作前，優先拿 reference 連結當最終依據**，因為版本/定價變動快。
 
 **外部資源（官方文檔 / API / 社群 / 緊急更新連結）** → [references/external-resources.md](references/external-resources.md)。**2026 模型發布時間軸**（誰新誰舊/替代對象/何時選）見該檔的 Model Release Timeline 表。
 
@@ -315,5 +323,10 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 - 🆕 **Kling 3.0 / O-series**、**Seedream 5.0 Lite**、**Vidu Q3**、**Ideogram 3.0** 為各家當前主力。
 - 🆕 **Google Gemini Omni**（I/O 2026, 2026-05-19）— any-to-any 多模態影片「影片版 Nano Banana」，對話式編輯，Flash 版已上 Flow PRO。Google 影片變雙旗艦（Veo 3.1 + Gemini Omni）。⚠️ ≠ Kling 3.0 Omni（同名不同家）。
 - 各模型「最強情境 + 招牌 prompt 技巧」見 [references/model-picker.md](references/model-picker.md)；「prompt 沒主題/畫面空/效果差」見 [references/concept-first-prompting.md](references/concept-first-prompting.md)。
+
+**2026-08 Seedance 擴充：**
+- Seedance 2.5 採 provider capability gate，不把社群介面標籤誤當所有供應商都已支援；送出前核對實際模型名稱、時長、音訊與參考素材能力。
+- 新增 30 秒、多參考、UGC／Vlog、硬切、提示詞拆解、首鏡後鎖定、角色／髮飾／服裝／道具一致性、時間凍結／倒轉與複雜物理的專用手冊。
+- 新增商業、建商、廣告、產品、汽車、美食、電影與動畫的領域骨架；AI 短劇的故事架構仍交由 `ai-short-drama`，本 Skill 負責下游媒體提示詞。
 
 各模型「禁忌 / 版本推翻歷史」見 [references/community-prompt-patterns.md](references/community-prompt-patterns.md)；結果有瑕疵的修法見 [references/quality-control.md](references/quality-control.md)。
