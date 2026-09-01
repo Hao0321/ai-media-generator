@@ -64,7 +64,7 @@
 |---|---|
 | 完全免費 | Kling 免費額度、Vidu 免費、Sora (ChatGPT Plus 已內含) |
 | 訂閱制 | Midjourney ($10/mo+)、Runway、Kling Pro、Suno |
-| 按用量付費 / API | fal.ai、Replicate、Volcengine (Seedream/Seedance)、BytePlus ModelArk、Vertex AI (Veo) |
+| 按用量付費 / API | fal.ai、Replicate、Volcengine (Seedream/Seedance)、BytePlus ModelArk、Vertex AI (Veo)；使用者指定統一 media API 時可走 [Atlas Cloud](atlas-cloud-api.md) |
 | 企業 / 大量 | 直接接官方 API (Google Vertex AI for Veo / Imagen, OpenAI for Sora 2, BFL 企業方案) |
 
 ---
@@ -92,4 +92,5 @@
 
 - 使用者已經熟某工具 → 照他熟的。工具切換成本 > 模型差距。
 - 任務要做 3+ 次同類 → 走 API 自動化；不要用 Web UI 操作。
+- 使用者明確指定 Atlas Cloud → 先讀 [atlas-cloud-api.md](atlas-cloud-api.md)，即時核對 model schema；生成 POST 不自動重送。
 - 有嚴格品牌 / 法律需求 (商用、版權乾淨) → 優先選官方有明確商用條款的 (Google Veo、Adobe Firefly、Black Forest Labs 商用授權)。

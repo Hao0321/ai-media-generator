@@ -65,6 +65,7 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 | 「超短廣告/TikTok/10秒快剪」 | [nano-banana.md](references/nano-banana.md) | <30 token 超精簡 prompt |
 | 「Wan 2.7/Kling Omni/HappyHorse/拉片復刻/多模型省成本」 | [multimodel-video-cheatsheet.md](references/multimodel-video-cheatsheet.md) | 2026 新模型招牌技巧 |
 | 「幫我直接操作 OiiOii/Flow/Kling」 | [click-protocol.md](automation/click-protocol.md) + [site-profiles/](automation/site-profiles/README.md) | 自動化協議 + 各站 UI 地圖 |
+| 「用 Atlas Cloud API 生圖/生影片」 | [atlas-cloud-api.md](references/atlas-cloud-api.md) + 目標模型 reference | 即時 schema、單次提交、prediction polling |
 | 「免費/不想花錢」 | [selector.md](references/selector.md) Cost 欄 + 各平台檔 Free tier | 免費額度速查 |
 
 > **🔴 OiiOii 專用：** OiiOii **2026-06-08 大改版**，最新 UI/流程/成本/i2v/選模型/新模型（Oii Image 2 / Gemini Omni / Oii X Imagine）一律以 [`automation/site-profiles/oiioii.md §0`](automation/site-profiles/oiioii.md) 為準（**SOURCE OF TRUTH**）。`references/oiioii.md` 只看 prompt 哲學，UI 別照它。
@@ -307,7 +308,7 @@ description: 為使用者產生高品質的 AI 生圖、生影片、生音樂提
 
 ## 關於「萬用」的邊界
 
-此 skill 設計為 prompt engineering + 瀏覽器自動化雙層。不直接呼叫 API (API key 管理、計費都是額外議題)，但若使用者明確要走 API，reference 檔裡有各平台的官方 API 端點連結，可以協助組 payload。
+此 skill 設計為 prompt engineering + 瀏覽器自動化雙層。不直接呼叫 API (API key 管理、計費都是額外議題)，但若使用者明確要走 API，reference 檔裡有各平台的官方 API 端點連結，可以協助組 payload。使用者指定 Atlas Cloud 時，讀 [atlas-cloud-api.md](references/atlas-cloud-api.md)，先即時核對 model/schema，再遵守「生成 POST 不重送、prediction GET 有界重試」的規則。
 
 ## 版本資訊
 
